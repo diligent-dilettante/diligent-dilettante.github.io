@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Business Planner: A Free AI Skill That Stress-Tests Your Business Idea | Sri Krishna Ravavarapu</title>
+  <meta name="description" content="Business Planner is a free, open-source AI skill for Claude that grills your business idea instead of flattering it. Built for physical businesses, MSMEs, and first-time founders in India. By Sri Krishna Ravavarapu." />
+  <meta name="keywords" content="business planner AI, validate business idea, AI business plan, Claude skill, MSME business plan India, unit economics, startup validation tool, free business plan tool" />
+  <meta name="author" content="Sri Krishna Ravavarapu" />
+  <link rel="canonical" href="https://diligent-dilettante.github.io/business-planner.html" />
+  <meta property="og:title" content="Business Planner: An AI That Argues With Your Business Idea" />
+  <meta property="og:description" content="A free, open-source Claude skill that stress-tests business ideas the way a skeptical advisor would. Built by a founder who ran a factory." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://diligent-dilettante.github.io/business-planner.html" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Business Planner: An AI That Argues With Your Business Idea" />
+  <meta name="twitter:description" content="A free, open-source Claude skill that stress-tests business ideas the way a skeptical advisor would." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Why I Built a Business Planner That Argues With You",
+    "description": "A free, open-source AI skill for Claude that stress-tests business ideas instead of flattering them. Built for physical businesses and first-time founders.",
+    "author": {
+      "@type": "Person",
+      "name": "Sri Krishna Ravavarapu",
+      "url": "https://diligent-dilettante.github.io",
+      "jobTitle": "Product Manager",
+      "worksFor": { "@type": "Organization", "name": "Razorpay" },
+      "alumniOf": ["Indian School of Business", "IIT Madras"],
+      "sameAs": ["https://www.linkedin.com/in/sri-krishna-r/", "https://github.com/diligent-dilettante"]
+    },
+    "datePublished": "2026-08-09",
+    "url": "https://diligent-dilettante.github.io/business-planner.html"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Business Planner?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Business Planner is a free, open-source AI skill for Claude that evaluates business ideas by interviewing the founder section by section, checking unit economics, supply chain, and demand evidence before producing a plan. Unlike most AI tools, it is designed to push back and kill bad ideas early."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who is Business Planner for?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Physical and offline businesses at any scale: solo shops, MSMEs, D2C brands, retail, food, services, and funded startups. It includes India-specific context like GST, working capital cycles, and MSME funding routes, but the core method works anywhere."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is it different from asking ChatGPT or Claude for a business plan?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A plain AI chat defaults to agreeable answers and produces optimistic plans for any idea. Business Planner runs a kill-screen first, makes unit economics and financials non-skippable, tags every number as sourced, founder-supplied, or estimate, and ends every engagement with a clear go, no-go, pivot, or pilot decision."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Business Planner free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. It is open source on GitHub at github.com/diligent-dilettante/business-planner and installs as a Claude skill."
+        }
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #fdfdfb;
+      --text: #222;
+      --muted: #777;
+      --accent: #1a5276;
+      --border: #e6e6e2;
+      font-size: 17px;
+    }
+    [data-theme="dark"] {
+      --bg: #1c1c1e;
+      --text: #e0e0e0;
+      --muted: #888;
+      --accent: #7ab8e8;
+      --border: #2e2e31;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, Georgia, serif;
+      line-height: 1.75;
+      transition: background 0.2s, color 0.2s;
+    }
+    nav {
+      display: flex; justify-content: flex-end; align-items: center; gap: 1.4rem;
+      padding: 0.85rem 2.5rem; border-bottom: 1px solid var(--border);
+    }
+    nav a { color: var(--accent); text-decoration: none; font-size: 0.92rem; }
+    nav a:hover { text-decoration: underline; }
+    .theme-btn { cursor: pointer; background: none; border: none; color: var(--text); font-size: 1rem; padding: 0; line-height: 1; }
+    .page { max-width: 640px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+    h1 { font-size: 1.7rem; font-weight: 600; letter-spacing: -0.3px; line-height: 1.3; margin-bottom: 0.5rem; }
+    .byline { color: var(--muted); font-size: 0.85rem; margin-bottom: 2.25rem; }
+    .byline a { color: var(--accent); text-decoration: none; }
+    p { font-size: 0.97rem; margin-bottom: 1.1rem; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h2 { font-size: 1.15rem; font-weight: 600; margin: 2rem 0 0.8rem; }
+    .tldr {
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 6px;
+      padding: 0.9rem 1.1rem;
+      margin-bottom: 1.75rem;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+    code {
+      background: var(--border); padding: 0.1rem 0.4rem; border-radius: 4px;
+      font-size: 0.85rem; font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    .back { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-size: 0.88rem; }
+    @media (max-width: 600px) {
+      nav { padding: 0.7rem 1.2rem; }
+      .page { padding: 2rem 1.25rem 4rem; }
+      h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">home</a>
+    <a href="https://github.com/diligent-dilettante/business-planner" target="_blank">source</a>
+    <button class="theme-btn" id="themeBtn">🌙</button>
+  </nav>
+
+  <div class="page">
+
+    <h1>why i built a business planner that argues with you</h1>
+    <p class="byline">
+      august 2026 · <a href="index.html">sri krishna ravavarapu</a> ·
+      <a href="https://github.com/diligent-dilettante/business-planner" target="_blank">code on github</a>
+    </p>
+
+    <div class="tldr">
+      <b>tl;dr:</b> a free claude skill that stress-tests your business idea instead of
+      flattering it.
+      <a href="https://github.com/diligent-dilettante/business-planner" target="_blank">get it here</a>.
+    </div>
+
+    <p>
+      ask an AI about your business idea and it will say the idea is promising. it says
+      this to everyone.
+    </p>
+
+    <p>
+      a good advisor does the opposite. the best one i had killed a bad idea of mine in
+      ten minutes. that saved me six months.
+    </p>
+
+    <p>
+      i ran a foundry in vizag for three and a half years. factories don't die of bad
+      narratives. they die of thin margins and slow-paying customers. the ninety days
+      between paying your supplier and getting paid yourself will sink you while the
+      pitch deck still looks great. i built the planner around that.
+    </p>
+
+    <h2>how it works</h2>
+
+    <p>
+      four questions before anything else. does anyone want this. can one unit make money.
+      can you reach the buyer. is there a rule that ends it on day one. most ideas should
+      fail here. failing here is cheap. failing later is not.
+    </p>
+
+    <p>
+      then it interviews you, section by section. unit economics can't be skipped. every
+      number is tagged: <code>sourced</code>, <code>founder-supplied</code>, or
+      <code>estimate</code>. override a warning and it writes down your reason and moves on.
+      correct a fact and it takes your word. you know your market. it doesn't.
+    </p>
+
+    <p>
+      it also knows most businesses shouldn't be startups. a shop clearing a lakh a month
+      is a good business. and when a test is cheap, it says go test.
+    </p>
+
+    <p>
+      every conversation ends in a decision: go, no-go, pivot, or pilot.
+    </p>
+
+    <h2>try it</h2>
+
+    <p>
+      free and open source:
+      <a href="https://github.com/diligent-dilettante/business-planner" target="_blank">github.com/diligent-dilettante/business-planner</a>.
+      if it saves you from a bad bet,
+      <a href="mailto:krishna.ravavarapu@gmail.com">write to me</a>.
+    </p>
+
+    <div class="back">
+      <a href="index.html">← back home</a>
+    </div>
+
+  </div>
+
+  <script>
+    const btn = document.getElementById('themeBtn');
+    const root = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') { root.setAttribute('data-theme', 'dark'); btn.textContent = '☀️'; }
+    btn.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      btn.textContent = next === 'dark' ? '☀️' : '🌙';
+      localStorage.setItem('theme', next);
+    });
+  </script>
+
+</body>
+</html>
