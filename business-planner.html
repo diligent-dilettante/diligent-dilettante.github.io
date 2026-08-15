@@ -8,8 +8,8 @@
   <meta name="author" content="Sri Krishna Ravavarapu" />
   <link rel="canonical" href="https://diligent-dilettante.github.io/business-planner.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <meta name="theme-color" content="#faf8f5" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#1a1917" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)" />
   <meta property="og:title" content="Business Planner: An AI That Argues With Your Business Idea" />
   <meta property="og:description" content="A free, open-source bundle of six Claude skills that stress-tests business ideas the way a skeptical advisor would. Built by someone who ran a foundry." />
   <meta property="og:type" content="article" />
@@ -148,22 +148,27 @@
   </script>
   <style>
     :root {
-      --bg: #faf8f5;
-      --text: #2b2926;
-      --muted: #635b51;
-      --accent: #6b5844;
-      --border: #e7e1d8;
+      --bg: #ffffff;
+      --text: #1b1b1d;
+      --muted: #5c5f66;
+      --accent: #0a5fa8;
+      --border: #e3e5e9;
+      --mark: rgba(10, 95, 168, 0.16);
       --mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono', Consolas, monospace;
       font-size: 18px;
     }
     [data-theme="dark"] {
-      --bg: #1a1917;
-      --text: #e8e4dd;
-      --muted: #b0a698;
-      --accent: #c9b79c;
-      --border: #2c2a26;
+      --bg: #121316;
+      --text: #eceef1;
+      --muted: #9ba1aa;
+      --accent: #7cbcff;
+      --border: #282b31;
+      --mark: rgba(124, 188, 255, 0.24);
     }
-    ::selection { background: var(--border); }
+    ::selection { background: var(--mark); }
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px;
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background: var(--bg);
@@ -175,23 +180,19 @@
       display: flex; justify-content: flex-end; align-items: center; gap: 1.4rem;
       padding: 0.85rem 2.5rem; border-bottom: 1px solid var(--border);
     }
-    nav a { color: var(--accent); text-decoration: none; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; }
+    nav a { color: var(--accent); text-decoration: none; font-size: 0.85rem; }
     nav a:hover { text-decoration: underline; }
     .theme-btn { cursor: pointer; background: none; border: none; color: var(--text); font-size: 1rem; padding: 0; line-height: 1; }
     .page { max-width: 640px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
     h1 { font-size: 2rem; font-weight: 400; letter-spacing: -0.4px; line-height: 1.2; margin-bottom: 0.75rem; }
-    .byline {
-      color: var(--muted); font-family: var(--mono); font-size: 0.72rem;
-      letter-spacing: 0.06em; margin-bottom: 2.75rem;
-    }
+    .byline { color: var(--muted); font-size: 0.85rem; margin-bottom: 2.75rem; }
     .byline a { color: var(--accent); text-decoration: none; }
     p { margin-bottom: 1.15rem; }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
     h2 {
-      font-family: var(--mono);
-      font-size: 0.72rem; font-weight: 400; margin: 3.25rem 0 1.5rem;
-      color: var(--muted); letter-spacing: 0.22em; text-transform: lowercase;
+      font-size: 0.85rem; font-weight: 400; margin: 3rem 0 1.4rem;
+      color: var(--muted); letter-spacing: 0.14em;
     }
     h3 { font-size: 1rem; font-weight: 600; margin: 1.75rem 0 0.4rem; }
     .tldr {
@@ -215,11 +216,11 @@
     .skills { width: 100%; border-collapse: collapse; margin-bottom: 1.2rem; font-size: 0.92rem; }
     .skills th, .skills td { text-align: left; vertical-align: top; padding: 0 1.5rem 1.25rem 0; }
     .skills td:last-child { padding-right: 0; }
-    .skills th { font-family: var(--mono); font-size: 0.78rem; font-weight: 400; white-space: nowrap; color: var(--accent); letter-spacing: 0.02em; }
+    .skills th { font-size: 0.85rem; font-weight: 600; white-space: nowrap; }
     .table-wrap { overflow-x: auto; }
     .faq h3 { margin-top: 1.9rem; }
     .faq p { margin-bottom: 0.6rem; }
-    .back { margin-top: 4rem; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; }
+    .back { margin-top: 4rem; font-size: 0.85rem; }
     @media (max-width: 600px) {
       nav { padding: 0.7rem 1.2rem; }
       .page { padding: 2rem 1.25rem 4rem; }
@@ -241,12 +242,12 @@
 
     <h1>why i built a business planner that argues with you</h1>
     <p class="byline">
-      august 2026 · <a href="index.html">sri krishna ravavarapu</a> ·
-      <a href="https://github.com/diligent-dilettante/business-planner" target="_blank" rel="noopener">code on github</a>
+      August 2026 · <a href="index.html">Sri Krishna Ravavarapu</a> ·
+      <a href="https://github.com/diligent-dilettante/business-planner" target="_blank" rel="noopener">code on GitHub</a>
     </p>
 
     <div class="tldr">
-      <b>tl;dr:</b> business-planner is a free, open-source bundle of six claude skills that
+      <b>tl;dr:</b> business-planner is a free, open-source bundle of six Claude skills that
       interrogates your business idea and ends in a go, no-go, pivot or pilot decision. built
       for physical and offline businesses. MIT licensed.
       <a href="https://github.com/diligent-dilettante/business-planner" target="_blank" rel="noopener">get it here</a>.
@@ -262,7 +263,7 @@
     </p>
 
     <p>
-      i ran a foundry in vizag for three and a half years. the thing that actually hurt was
+      i ran a foundry in Vizag for three and a half years. the thing that actually hurt was
       the ninety days between paying a supplier and getting paid ourselves. the pitch deck
       looked fine that entire time. i built the planner around that gap.
     </p>
@@ -270,7 +271,7 @@
     <h2>what business planner is</h2>
 
     <p>
-      business-planner is a bundle of six claude skills for building and growing physical
+      business-planner is a bundle of six Claude skills for building and growing physical
       or offline businesses. a controller skill runs an interview-led plan, and pulls in
       five sub-skills as the plan needs them. it is free, MIT licensed, and open source.
     </p>
@@ -321,13 +322,13 @@
 
     <h2>how to install business planner</h2>
 
-    <p>in claude code:</p>
+    <p>in Claude Code:</p>
 
 <pre><code>/plugin marketplace add diligent-dilettante/business-planner
 /plugin install business-planner</code></pre>
 
     <p>
-      in claude desktop or claude.ai, upload the skill folders under settings, capabilities,
+      in Claude Desktop or Claude.ai, upload the skill folders under settings, capabilities,
       skills. or add them to a project's knowledge. then just describe what you're doing:
       <i>"i want to start a furniture brand selling online, is it worth it"</i>, or
       <i>"my bakery does well locally, should i add a second product line"</i>. the controller
@@ -346,7 +347,7 @@
         living as a real success.
       </p>
 
-      <h3>how is it different from asking chatgpt for a business plan?</h3>
+      <h3>how is it different from asking ChatGPT for a business plan?</h3>
       <p>
         a plain chat produces an optimistic plan for any idea you give it. this one runs the
         kill screen first, makes unit economics non-skippable, tags the provenance of every
@@ -355,12 +356,12 @@
 
       <h3>is it free?</h3>
       <p>
-        yes. MIT licensed, open source, no account or key beyond your existing claude access.
+        yes. MIT licensed, open source, no account or key beyond your existing Claude access.
       </p>
 
-      <h3>does it work outside india?</h3>
+      <h3>does it work outside India?</h3>
       <p>
-        yes. the method is country-neutral. the india reference files, GST, udyam, MSME capital
+        yes. the method is country-neutral. the India reference files, GST, Udyam, MSME capital
         sources, city-tier segmentation, load only when the plan is india-based.
       </p>
 
@@ -377,7 +378,7 @@
     <h2>try it</h2>
 
     <p>
-      <a href="https://github.com/diligent-dilettante/business-planner" target="_blank" rel="noopener">github.com/diligent-dilettante/business-planner</a>.
+      <a href="https://github.com/diligent-dilettante/business-planner" target="_blank" rel="noopener">GitHub.com/diligent-dilettante/business-planner</a>.
       if it saves you from a bad bet,
       <a href="mailto:krishna.ravavarapu@gmail.com">write to me</a>.
     </p>

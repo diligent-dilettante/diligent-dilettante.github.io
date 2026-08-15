@@ -8,8 +8,8 @@
   <meta name="author" content="Sri Krishna Ravavarapu" />
   <link rel="canonical" href="https://diligent-dilettante.github.io/" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <meta name="theme-color" content="#faf8f5" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#1a1917" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)" />
   <meta property="og:title" content="Sri Krishna Ravavarapu" />
   <meta property="og:description" content="Product at Razorpay, cross-border payments. Before that, a foundry in Vizag and state government consulting. IIT Madras, ISB." />
   <meta property="og:type" content="profile" />
@@ -109,21 +109,23 @@
     })();
   </script>
   <style>
+    /* One family. Four sizes: 2rem / 1.1rem / 1rem / 0.85rem. */
     :root {
-      --bg: #faf8f5;
-      --text: #2b2926;
-      --muted: #635b51;
-      --accent: #6b5844;
-      --border: #e7e1d8;
-      --mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono', Consolas, monospace;
+      --bg: #ffffff;
+      --text: #1b1b1d;
+      --muted: #5c5f66;
+      --accent: #0a5fa8;
+      --border: #e3e5e9;
+      --mark: rgba(10, 95, 168, 0.16);
       font-size: 18px;
     }
     [data-theme="dark"] {
-      --bg: #1a1917;
-      --text: #e8e4dd;
-      --muted: #b0a698;
-      --accent: #c9b79c;
-      --border: #2c2a26;
+      --bg: #121316;
+      --text: #eceef1;
+      --muted: #9ba1aa;
+      --accent: #7cbcff;
+      --border: #282b31;
+      --mark: rgba(124, 188, 255, 0.24);
     }
     html { scroll-behavior: smooth; }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
@@ -134,98 +136,107 @@
       font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, Georgia, serif;
       line-height: 1.7;
     }
+    ::selection { background: var(--mark); }
+    a { color: var(--accent); }
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px;
+    }
+    .skip {
+      position: absolute; left: -9999px; top: 0; background: var(--bg);
+      color: var(--accent); padding: 0.6rem 1rem; z-index: 10;
+    }
+    .skip:focus { left: 0; }
     nav {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 1.4rem;
-      padding: 0.85rem 2.5rem;
+      display: flex; flex-wrap: wrap;
+      justify-content: flex-end; align-items: center;
+      gap: 1.25rem; padding: 0.9rem 2.5rem;
       border-bottom: 1px solid var(--border);
     }
-    nav a { color: var(--accent); text-decoration: none; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; }
-    ::selection { background: var(--border); }
+    nav a { text-decoration: none; font-size: 0.85rem; }
     nav a:hover { text-decoration: underline; }
-    .theme-btn { cursor: pointer; background: none; border: none; color: var(--text); font-size: 1rem; padding: 0; line-height: 1; }
+    .theme-btn {
+      cursor: pointer; background: none; border: none; color: var(--accent);
+      font-family: inherit; font-size: 0.85rem; padding: 0; line-height: inherit;
+    }
+    .theme-btn:hover { text-decoration: underline; }
     .page { max-width: 640px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
     .hero { margin-bottom: 4rem; }
     .hero h1 { font-size: 2rem; font-weight: 400; letter-spacing: -0.4px; margin-bottom: 1.75rem; line-height: 1.2; }
-    .hero h1 b { font-weight: 600; }
+    .hero h1 .fn { font-weight: 600; }
     .hero p { margin-bottom: 1.15rem; }
-    .hero p:first-of-type { font-size: 1.12rem; line-height: 1.6; }
-    .hero a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--border); }
-    .hero a:hover { border-bottom-color: var(--accent); }
-    section { margin-bottom: 3.75rem; }
+    .hero p:first-of-type { font-size: 1.1rem; line-height: 1.6; }
+    .hero a { text-decoration: underline; text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+    section { margin-bottom: 3.5rem; }
     h2 {
-      font-family: var(--mono);
-      font-size: 0.72rem; font-weight: 400; margin-bottom: 1.6rem;
-      color: var(--muted); letter-spacing: 0.22em; text-transform: lowercase;
+      font-size: 0.85rem; font-weight: 400; margin-bottom: 1.5rem;
+      color: var(--muted); letter-spacing: 0.14em;
     }
-    .row { display: flex; gap: 1.75rem; padding: 0 0 1.5rem; }
+    .row { display: flex; gap: 1.75rem; padding: 0 0 1.4rem; }
     .row:last-child { padding-bottom: 0; }
     .row-date {
-      font-family: var(--mono); font-variant-numeric: tabular-nums;
-      color: var(--muted); font-size: 0.74rem; letter-spacing: 0.03em;
-      min-width: 104px; padding-top: 0.32rem; flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+      color: var(--muted); font-size: 0.85rem;
+      min-width: 104px; padding-top: 0.15rem; flex-shrink: 0;
     }
-    .row-text { font-size: 0.95rem; line-height: 1.65; }
-    .row-text a { color: var(--accent); text-decoration: none; }
-    .row-text a:hover { text-decoration: underline; }
-    .sub { display: block; font-size: 0.88rem; color: var(--muted); line-height: 1.55; margin-bottom: 0.15rem; }
-    .foot { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
-    .social-row { display: flex; justify-content: center; gap: 0.85rem; margin-bottom: 1rem; }
+    .row-text { line-height: 1.65; }
+    .row-text a { text-decoration: underline; text-underline-offset: 0.16em; text-decoration-thickness: 1px; }
+    .sub { display: block; font-size: 0.85rem; color: var(--muted); line-height: 1.55; margin-bottom: 0.15rem; }
+    .foot { margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+    .social-row { display: flex; justify-content: center; gap: 0.6rem; margin-bottom: 1.1rem; }
     .social-row a {
       display: flex; align-items: center; justify-content: center;
-      width: 38px; height: 38px; border-radius: 7px; border: 1px solid var(--border);
+      width: 44px; height: 44px; border-radius: 6px; border: 1px solid var(--border);
       color: var(--text); text-decoration: none; transition: border-color 0.15s, color 0.15s;
     }
     .social-row a:hover { border-color: var(--accent); color: var(--accent); }
-    .foot-note { font-size: 0.88rem; color: var(--muted); }
-    .foot-note a { color: var(--accent); text-decoration: none; }
+    .foot-note { font-size: 0.85rem; color: var(--muted); }
     @media (max-width: 600px) {
-      .hero h1 { font-size: 1.6rem; }
-      nav { padding: 0.7rem 1.2rem; gap: 1.1rem; }
+      .hero h1 { font-size: 1.65rem; }
+      nav { padding: 0.75rem 1.25rem; gap: 1rem; justify-content: center; }
       .page { padding: 2rem 1.25rem 4rem; }
-      .row { flex-direction: column; gap: 0.2rem; }
+      .row { flex-direction: column; gap: 0.25rem; }
       .row-date { min-width: 0; padding-top: 0; }
     }
   </style>
 </head>
 <body>
 
+  <a class="skip" href="#about">skip to content</a>
+
   <nav>
     <a href="#now">now</a>
     <a href="#selected">selected</a>
     <a href="#work">work</a>
+    <a href="#education">education</a>
     <a href="#writing">writing</a>
-    <a href="https://www.linkedin.com/in/sri-krishna-r/" target="_blank" rel="noopener">linkedin</a>
-    <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">🌙</button>
+    <button class="theme-btn" id="themeBtn" aria-pressed="false">dark</button>
   </nav>
 
   <div class="page">
 
     <!-- HERO -->
     <header class="hero" id="about">
-      <h1><b>sri krishna</b> ravavarapu</h1>
+      <h1><span class="fn">sri krishna</span> ravavarapu</h1>
 
       <p>
-        i work in product at <a href="https://razorpay.com" target="_blank" rel="noopener">razorpay</a>,
-        on cross-border payments. i shipped apple pay in thirty days, making razorpay the
-        first payment aggregator in india to carry it, then grew its merchant base about
+        i work in product at <a href="https://razorpay.com" target="_blank" rel="noopener">Razorpay</a>,
+        on cross-border payments. i shipped Apple Pay in thirty days, making Razorpay the
+        first payment aggregator in India to carry it, then grew its merchant base about
         seventy times over in the four months after. i also built two checkout surfaces
-        razorpay didn't have before, a web SDK and a native SDK. these days mostly BNPL.
+        Razorpay didn't have before, a web SDK and a native SDK. these days mostly BNPL.
       </p>
 
       <p>
         before this, three and a half years running
-        <a href="https://nichromecastings.com" target="_blank" rel="noopener">nichrome superalloy castings</a>,
-        our family's foundry in vizag. revenue more than tripled in three years. a new
+        <a href="https://nichromecastings.com" target="_blank" rel="noopener">Nichrome Superalloy Castings</a>,
+        our family's foundry in Vizag. revenue more than tripled in three years. a new
         product line returned around fourteen times what i put into it. i ran the commodity
         and currency hedging book, where nickel moved the P&amp;L more than castings did.
       </p>
 
       <p>
         before that, two years at
-        <a href="https://ycpauctus.com" target="_blank" rel="noopener">auctus advisors</a>,
+        <a href="https://ycpauctus.com" target="_blank" rel="noopener">Auctus Advisors</a>,
         consulting for state governments.
       </p>
 
@@ -236,7 +247,7 @@
 
       <p>
         <a href="https://www.isb.edu" target="_blank" rel="noopener">ISB</a> (PGP, marketing and
-        entrepreneurship, 2025). <a href="https://www.iitm.ac.in" target="_blank" rel="noopener">IIT madras</a>
+        entrepreneurship, 2025). <a href="https://www.iitm.ac.in" target="_blank" rel="noopener">IIT Madras</a>
         (b.tech, 2018). i still track the base metals, mostly nickel and copper. outside
         work: quizzing, badminton, squash, padel. currently learning drums.
       </p>
@@ -247,18 +258,18 @@
       <h2>now</h2>
 
       <div class="row">
-        <div class="row-date">aug 2026</div>
+        <div class="row-date">Aug 2026</div>
         <div class="row-text">
-          three BNPL integrations at once, tabby and klarna and tamara, for middle east and
-          european buyers. one merchant-of-record setup and one ledger channel that every
+          three BNPL integrations at once, Tabby and Klarna and Tamara, for Middle East and
+          European buyers. one merchant-of-record setup and one ledger channel that every
           future BNPL plugs into.
         </div>
       </div>
       <div class="row">
         <div class="row-date">2026</div>
         <div class="row-text">
-          built a separate international checkout, tailored to how buyers outside india
-          actually pay, for cross-border merchants and for razorpay's own overseas domestic
+          built a separate international checkout, tailored to how buyers outside India
+          actually pay, for cross-border merchants and for Razorpay's own overseas domestic
           markets. worth eight to ten points of success rate, ramped on significance rather
           than on the graph looking right.
         </div>
@@ -288,7 +299,7 @@
       <div class="row">
         <div class="row-date">2026</div>
         <div class="row-text">
-          ten-odd claude skills written so far. six of them are
+          ten-odd Claude skills written so far. six of them are
           <a href="https://github.com/diligent-dilettante/business-planner" target="_blank" rel="noopener">business-planner</a>,
           open source, for people building physical businesses. the rest is tooling for my
           own team.
@@ -303,22 +314,22 @@
       <div class="row">
         <div class="row-date">2025</div>
         <div class="row-text">
-          took apple pay's success rate twenty-three points above the card baseline, then
-          chased down the leaks: amex token failures, a sync-tap bug in the JS SDK, a saved
+          took Apple Pay's success rate twenty-three points above the card baseline, then
+          chased down the leaks: Amex token failures, a sync-tap bug in the JS SDK, a saved
           card crash.
         </div>
       </div>
       <div class="row">
         <div class="row-date">2021 – 24</div>
         <div class="row-text">
-          added reliance, aramco, linde and technip to the foundry's book, mostly by taking
+          added Reliance, Aramco, Linde and Technip to the foundry's book, mostly by taking
           them off competitors.
         </div>
       </div>
       <div class="row">
         <div class="row-date">2022</div>
         <div class="row-text">
-          ran the book through the march '22 LME nickel squeeze. the position closed up 40%
+          ran the book through the March '22 LME nickel squeeze. the position closed up 40%
           while the plant kept buying.
         </div>
       </div>
@@ -326,7 +337,7 @@
         <div class="row-date">2021 – 22</div>
         <div class="row-text">
           restructured working capital. bill discounting cut the cash cycle by more than
-          90%, and export credit insurance made iraq and ukraine underwritable.
+          90%, and export credit insurance made Iraq and Ukraine underwritable.
         </div>
       </div>
       <div class="row">
@@ -340,7 +351,7 @@
       <div class="row">
         <div class="row-date">2019</div>
         <div class="row-text">
-          india's first facial-recognition municipal elections, across 160 polling stations.
+          India's first facial-recognition municipal elections, across 160 polling stations.
           the same stack issued life certificates to pensioners.
         </div>
       </div>
@@ -354,7 +365,7 @@
       <div class="row">
         <div class="row-date">2017 – 18</div>
         <div class="row-text">
-          elected cultural affairs secretary by 9,000 students. ran saarang, india's largest
+          elected cultural affairs secretary by 9,000 students. ran Saarang, India's largest
           student-run festival: fifteen clubs, a 500-person team, around a hundred events,
           and the biggest budget in its thirty years. also got the senate to put arts
           electives into the undergraduate curriculum.
@@ -367,21 +378,21 @@
       <h2>work</h2>
 
       <div class="row">
-        <div class="row-date">apr 2025 –<br>present</div>
+        <div class="row-date">Apr 2025 –<br>present</div>
         <div class="row-text">
           <b>product, cross-border payments and checkout</b>
-          <span class="sub"><a href="https://razorpay.com" target="_blank" rel="noopener">razorpay</a></span>
-          international payment methods and checkout, for indian merchants selling abroad
-          and for razorpay's own overseas markets. five methods, the pricing on them, and
+          <span class="sub"><a href="https://razorpay.com" target="_blank" rel="noopener">Razorpay</a></span>
+          international payment methods and checkout, for Indian merchants selling abroad
+          and for Razorpay's own overseas markets. five methods, the pricing on them, and
           the SDK contracts the next one will use. i write code against the roadmap too.
         </div>
       </div>
 
       <div class="row">
-        <div class="row-date">nov 2020 –<br>mar 2024</div>
+        <div class="row-date">Nov 2020 –<br>Mar 2024</div>
         <div class="row-text">
           <b>director, sales and growth</b>
-          <span class="sub"><a href="https://nichromecastings.com" target="_blank" rel="noopener">nichrome superalloy castings, lohman group</a></span>
+          <span class="sub"><a href="https://nichromecastings.com" target="_blank" rel="noopener">Nichrome Superalloy Castings, Lohman Group</a></span>
           specialty investment castings for oil and gas, steel and defence. owned the P&amp;L
           across sales, procurement, the hedging book and the plant floor. revenue more than
           tripled in three years, output roughly doubled.
@@ -389,15 +400,15 @@
       </div>
 
       <div class="row">
-        <div class="row-date">jul 2018 –<br>jul 2020</div>
+        <div class="row-date">Jul 2018 –<br>Jul 2020</div>
         <div class="row-text">
           <b>business analyst</b>
-          <span class="sub"><a href="https://ycpauctus.com" target="_blank" rel="noopener">auctus advisors (YCP auctus)</a></span>
+          <span class="sub"><a href="https://ycpauctus.com" target="_blank" rel="noopener">Auctus Advisors (YCP Auctus)</a></span>
           investment promotion and digital transformation for state governments. co-led the
           data centre vertical that landed a $1.5bn AWS investment, working it from first
           pitch through due diligence to signing across ten departments, four ministers and
-          two law firms. pitched the state at WEF davos in a five-member delegation. ran the
-          PMO for india's first government facial recognition programme, from tech stack and
+          two law firms. pitched the state at WEF Davos in a five-member delegation. ran the
+          PMO for India's first government facial recognition programme, from tech stack and
           RFPs through to deployment.
         </div>
       </div>
@@ -408,7 +419,7 @@
       <h2>writing</h2>
 
       <div class="row">
-        <div class="row-date">aug 2026</div>
+        <div class="row-date">Aug 2026</div>
         <div class="row-text">
           <a href="business-planner.html">why i built a business planner that argues with you</a>
           <span class="sub">on turning an AI into the skeptical advisor most first-time founders never get</span>
@@ -424,7 +435,7 @@
         <div class="row-date">2024 – 2025</div>
         <div class="row-text">
           <b>PGP, marketing and entrepreneurship</b>
-          <span class="sub"><a href="https://www.isb.edu" target="_blank" rel="noopener">indian school of business</a></span>
+          <span class="sub"><a href="https://www.isb.edu" target="_blank" rel="noopener">Indian School of Business</a></span>
         </div>
       </div>
 
@@ -432,7 +443,7 @@
         <div class="row-date">2014 – 2018</div>
         <div class="row-text">
           <b>b.tech, mechanical engineering, minor in industrial engineering</b>
-          <span class="sub"><a href="https://www.iitm.ac.in" target="_blank" rel="noopener">IIT madras</a> · branch change on first-semester GPA, 14 of 820 · cultural affairs secretary, elected by 9,000 students · institute quiz team, seven podiums across the two years we won nihilanth</span>
+          <span class="sub"><a href="https://www.iitm.ac.in" target="_blank" rel="noopener">IIT Madras</a> · branch change on first-semester GPA, 14 of 820 · cultural affairs secretary, elected by 9,000 students · institute quiz team, seven podiums across the two years we won Nihilanth</span>
         </div>
       </div>
 
@@ -466,7 +477,7 @@
       <p class="foot-note">
         best reached via <a href="mailto:krishna.ravavarapu@gmail.com">email</a> or
         <a href="https://www.linkedin.com/in/sri-krishna-r/" target="_blank" rel="noopener">linkedin</a>.
-        always up for a conversation with people building physical businesses.
+        write if there's something worth talking about.
       </p>
     </div>
 
@@ -476,7 +487,12 @@
     (function () {
       var btn = document.getElementById('themeBtn');
       var root = document.documentElement;
-      var sync = function () { btn.textContent = root.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙'; };
+      var sync = function () {
+        var dark = root.getAttribute('data-theme') === 'dark';
+        btn.textContent = dark ? 'light' : 'dark';
+        btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+        btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+      };
       sync();
       btn.addEventListener('click', function () {
         var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
