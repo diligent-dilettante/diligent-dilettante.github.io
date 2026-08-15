@@ -129,14 +129,6 @@
       },
       {
         "@type": "Question",
-        "name": "How is Life Planning different from other AI planning tools?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Most planning tools help write the plan, and the plan is the easy part. Almost nobody fails at the planning session. Plans die in week three, when nothing gets looked at and a slip reads as evidence the whole idea was naive. Life Planning spends most of its length on keeping a plan alive and on how the conversation is conducted. The file covering conversational stance is the largest in the repository and contains no frameworks at all."
-        }
-      },
-      {
-        "@type": "Question",
         "name": "How long is a Life Planning session?",
         "acceptedAnswer": {
           "@type": "Answer",
@@ -149,22 +141,6 @@
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "In one markdown file called life-plan.md, wherever the user keeps it. Nothing is uploaded to a third-party service, nothing is locked into a proprietary format, and the whole file can be read in five minutes."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Do I need Claude Code to use Life Planning?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "No. It runs on Claude web with code execution and file creation enabled, which is where most people will use it. It also works in Claude Desktop and Claude Code, where the skill folder is copied into ~/.claude/skills/."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What happens if I stop using it for a month?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "That is the normal case and the skill is built for it. The user goes back without tidying anything up first. The skill asks whether it was a bad month or whether the goal is not actually the one, halves whatever was being attempted, and restarts in about twenty minutes without an autopsy."
         }
       },
       {
@@ -465,29 +441,6 @@
       before the first one happens.
     </p>
 
-    <h2>how it was tested</h2>
-
-    <p>
-      six single-turn evaluations against no-skill baselines, then seven multi-turn
-      conversations run between isolated agents. one agent played a person who did not know a
-      skill existed. another ran the skill without knowing the user was simulated. a third
-      relayed between them and wrote the critique.
-    </p>
-
-    <p>
-      each persona was built to attack a specific failure mode: someone whose partner is not
-      interested, someone demanding a full system on day one, someone deflecting a lapse with a
-      plausible excuse, someone for whom a values session turns into a marriage in trouble,
-      someone about to leave a salary for a business.
-    </p>
-
-    <p>
-      thirty-two defects came out of it. the useful ones were not bugs in the exercises. they
-      were rules that contradicted each other, and habits that felt warm and were not: grading
-      a disclosure, announcing the mechanic out loud, reassurance dressed up as a statistic,
-      handing someone their own words back sharpened.
-    </p>
-
     <h2>how to install life planning</h2>
 
     <p>on Claude web, turn on code execution first, then upload the skill:</p>
@@ -519,14 +472,6 @@ Customize → Skills → + → Create skill → upload life-planning.zip</code><
         them, and a note of what the partner has and has not seen.
       </p>
 
-      <h3>does it work without a partner?</h3>
-      <p>
-        yes, completely. the skill was rewritten around the single-user case after testing
-        showed partner-shaped scaffolding leaking through. the belonging rung, friendships and
-        community, gets watched precisely because there is no partner in the room pointing at
-        it.
-      </p>
-
       <h3>how long is a session?</h3>
       <p>
         twenty minutes for the first. ten minutes a week after that. thirty minutes once a
@@ -537,12 +482,6 @@ Customize → Skills → + → Create skill → upload life-planning.zip</code><
       <p>
         one markdown file, wherever you keep it. nothing gets uploaded anywhere, nothing is
         locked in, and the whole thing reads in five minutes.
-      </p>
-
-      <h3>do i need Claude Code?</h3>
-      <p>
-        no. it runs on Claude web with code execution enabled, which is where most people will
-        use it.
       </p>
 
       <h3>is it therapy?</h3>
@@ -567,24 +506,13 @@ Customize → Skills → + → Create skill → upload life-planning.zip</code><
 
     </div>
 
-    <h2>credits</h2>
-
-    <p>
-      the exercises are established work, assembled and adapted. GROW, the wheel of life, the
-      ACT bull's eye, workview and lifeview and odyssey plans from designing your life, WOOP
-      and implementation intentions, the twelve week year, lead and lag measures, immunity to
-      change, solution-focused questions, the gottman state of the union, berger's running
-      order for a marriage meeting, eve rodsky's fair play, money scripts, tim ferriss's past
-      year review. full attributions are in the
-      <a href="https://github.com/diligent-dilettante/life-planning" target="_blank" rel="noopener">repo</a>.
-    </p>
-
-    <p>
-      the stance file, which is the one that matters, comes from how good coaches and
-      therapists behave rather than from any framework.
-    </p>
-
     <h2>try it</h2>
+
+    <p>
+      the exercises are established work, assembled and adapted. GROW, the ACT bull's eye,
+      designing your life, WOOP, the twelve week year, immunity to change, fair play, the past
+      year review. full attributions are in the repo.
+    </p>
 
     <p>
       <a href="https://github.com/diligent-dilettante/life-planning" target="_blank" rel="noopener">GitHub.com/diligent-dilettante/life-planning</a>.
