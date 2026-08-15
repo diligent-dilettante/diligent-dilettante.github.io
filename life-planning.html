@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Life Planning: A Free Open-Source Claude Skill for Values, Goals and Weekly Check-Ins</title>
+  <meta name="description" content="Life Planning is a free, open-source Claude skill that coaches one person through values, direction, goals, a ten-minute weekly check-in and quarterly reviews. It asks questions instead of handing out templates, keeps one markdown file, and does the tracking for you. MIT licensed, runs on Claude web, desktop and Claude Code." />
+  <meta name="author" content="Sri Krishna Ravavarapu" />
+  <link rel="canonical" href="https://diligent-dilettante.github.io/life-planning.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)" />
+  <meta property="og:title" content="Life Planning: A Claude Skill Built for Week Three" />
+  <meta property="og:description" content="A free, open-source Claude skill for values, goals and a ten-minute weekly check-in. Most planning tools help you write the plan. This one is built for the week the plan usually dies." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://diligent-dilettante.github.io/life-planning.html" />
+  <meta property="og:site_name" content="Sri Krishna Ravavarapu" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Life Planning: A Claude Skill Built for Week Three" />
+  <meta name="twitter:description" content="A free, open-source Claude skill for values, goals and a ten-minute weekly check-in. Built for the week the plan usually dies." />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "A Life Planning Skill Built for Week Three",
+    "description": "Life Planning is a free, open-source Claude skill that runs values, direction, goals and a weekly check-in as a conversation rather than a template. Most of its length sits on keeping a plan alive after the planning session.",
+    "author": {
+      "@type": "Person",
+      "name": "Sri Krishna Ravavarapu",
+      "url": "https://diligent-dilettante.github.io/",
+      "jobTitle": "Product Manager, Cross-Border Payments",
+      "worksFor": { "@type": "Organization", "name": "Razorpay" },
+      "alumniOf": ["Indian School of Business", "Indian Institute of Technology Madras"],
+      "sameAs": ["https://www.linkedin.com/in/sri-krishna-r/", "https://github.com/diligent-dilettante"]
+    },
+    "datePublished": "2026-08-15",
+    "dateModified": "2026-08-15",
+    "url": "https://diligent-dilettante.github.io/life-planning.html",
+    "mainEntityOfPage": "https://diligent-dilettante.github.io/life-planning.html",
+    "about": { "@type": "SoftwareApplication", "name": "Life Planning" }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Life Planning",
+    "alternateName": "life-planning Claude skill",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "Any (runs inside Claude web, Claude Desktop, or Claude Code)",
+    "description": "A free, open-source Claude skill that coaches one person through values, direction, goals, the commitments a goal has to sit on, a ten-minute weekly check-in, quarterly and annual reviews, money, household load, and getting unstuck. It asks questions instead of handing out templates, keeps everything in one markdown file called life-plan.md, and does the tracking so the user never maintains a system.",
+    "url": "https://github.com/diligent-dilettante/life-planning",
+    "codeRepository": "https://github.com/diligent-dilettante/life-planning",
+    "downloadUrl": "https://github.com/diligent-dilettante/life-planning",
+    "license": "https://opensource.org/licenses/MIT",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Sri Krishna Ravavarapu", "url": "https://diligent-dilettante.github.io/" },
+    "featureList": [
+      "Twenty-minute first conversation instead of a ninety-minute intake",
+      "Ten-minute weekly check-in built around one number the user chooses",
+      "Every session opens by reading the file back and stating where the user stands",
+      "One markdown file, life-plan.md, that the user can read in five minutes",
+      "Values, vision, goals, foundations, quarterly and annual review, stuck, money and household load",
+      "Designed for one person; a partner is an optional layer and never a dependency",
+      "A twenty-minute restart for a lapsed plan, with no autopsy",
+      "Asks directly whether a stalled goal is still wanted, and supports dropping it",
+      "No praise for good numbers and no concern about bad ones, so reported numbers stay honest",
+      "Names when something is beyond a planning conversation, once, and returns to the planning work"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to install the Life Planning Claude skill",
+    "description": "Install the free, open-source life-planning skill on Claude web or Claude Code.",
+    "totalTime": "PT5M",
+    "estimatedCost": { "@type": "MonetaryAmount", "currency": "USD", "value": "0" },
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Enable code execution",
+        "text": "On Claude web, open Settings, then Capabilities, and turn on code execution and file creation."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Upload the skill",
+        "text": "Open Customize, then Skills, choose Create skill, and upload life-planning.zip from the GitHub repository."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Or install on Claude Code",
+        "text": "Copy the life-planning folder from the repository into ~/.claude/skills/."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Start a session",
+        "text": "Describe what is going on in your own words, for example: help me work out what actually matters to me, or I made a plan in January and nothing happened."
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the Life Planning Claude skill?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Life Planning is a free, open-source Claude skill that coaches one person through values, direction, goals, a ten-minute weekly check-in, quarterly and annual reviews, money, household load and getting unstuck. It asks questions rather than handing out templates, keeps everything in a single markdown file called life-plan.md, and does the tracking so the user never maintains a system. It is MIT licensed and available at github.com/diligent-dilettante/life-planning."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who is Life Planning for?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "One person, in their own conversation, over months. That is the design centre rather than a fallback, and everything works if they are the only person who ever uses it. Someone with a partner gets an optional layer: one question per session worth asking them, and a record of what the partner has and has not seen. The skill assumes the partner never takes part."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is Life Planning different from other AI planning tools?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most planning tools help write the plan, and the plan is the easy part. Almost nobody fails at the planning session. Plans die in week three, when nothing gets looked at and a slip reads as evidence the whole idea was naive. Life Planning spends most of its length on keeping a plan alive and on how the conversation is conducted. The file covering conversational stance is the largest in the repository and contains no frameworks at all."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long is a Life Planning session?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Twenty minutes for the first conversation. Ten minutes a week for the check-in after that. Thirty minutes once a quarter for a review. Longer versions exist, at forty-five to ninety minutes, and are usually the wrong choice."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where does the data live?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In one markdown file called life-plan.md, wherever the user keeps it. Nothing is uploaded to a third-party service, nothing is locked into a proprietary format, and the whole file can be read in five minutes."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need Claude Code to use Life Planning?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. It runs on Claude web with code execution and file creation enabled, which is where most people will use it. It also works in Claude Desktop and Claude Code, where the skill folder is copied into ~/.claude/skills/."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if I stop using it for a month?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "That is the normal case and the skill is built for it. The user goes back without tidying anything up first. The skill asks whether it was a bad month or whether the goal is not actually the one, halves whatever was being attempted, and restarts in about twenty minutes without an autopsy."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Life Planning therapy?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No, and the skill says so itself. If something surfaces that is beyond a planning conversation, including loss, rupture or anything touching safety, it names once and plainly that a therapist is the right person, then returns to the planning work rather than continuing to excavate. It is a coaching tool for goals and direction and is not a substitute for professional mental health care."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Life Planning free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. It is MIT licensed and open source on GitHub at github.com/diligent-dilettante/life-planning. No account, key or subscription is needed beyond existing access to Claude."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Will Life Planning write my plan for me?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. It asks the questions and writes down the answers. Sections that were not earned in the conversation are left blank rather than filled in to look complete, because a plan someone was handed is one they will not recognise in November."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (!t) { t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1b1b1d;
+      --muted: #5c5f66;
+      --accent: #0a5fa8;
+      --border: #e3e5e9;
+      --mark: rgba(10, 95, 168, 0.16);
+      --mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono', Consolas, monospace;
+      font-size: 18px;
+    }
+    [data-theme="dark"] {
+      --bg: #121316;
+      --text: #eceef1;
+      --muted: #9ba1aa;
+      --accent: #7cbcff;
+      --border: #282b31;
+      --mark: rgba(124, 188, 255, 0.24);
+    }
+    ::selection { background: var(--mark); }
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px;
+    }
+    .clock { color: var(--muted); font-variant-numeric: tabular-nums; }
+    .theme-switch {
+      display: inline-flex; align-items: center; gap: 2px;
+      border: 1px solid var(--border); border-radius: 999px; padding: 3px;
+    }
+    .tswitch {
+      cursor: pointer; background: none; border: none; padding: 0;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 999px;
+      color: var(--muted); opacity: 0.5;
+      transition: opacity 0.35s ease, background-color 0.35s ease, color 0.35s ease;
+    }
+    .tswitch svg { width: 19px; height: 19px; display: block; }
+    .tswitch[aria-pressed="true"] {
+      opacity: 1; color: var(--accent); background: var(--mark);
+    }
+    .tswitch[aria-pressed="true"] svg {
+      filter: drop-shadow(0 0 var(--glow-size, 5px) var(--glow, rgba(10, 95, 168, 0.55)));
+    }
+    .tswitch:hover { opacity: 0.85; }
+    .tswitch[aria-pressed="true"]:hover { opacity: 1; --glow-size: 9px; }
+    .moon-disc { opacity: 0.3; }
+    @media (prefers-reduced-motion: reduce) {
+      body { transition: none; }
+      .tswitch, .tswitch svg { transition: none; }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, Georgia, serif;
+      line-height: 1.75;
+      overflow-wrap: break-word;
+      transition: background-color 0.45s ease, color 0.45s ease;
+    }
+    nav {
+      display: flex; justify-content: flex-end; align-items: center; gap: 1.4rem;
+      padding: 0.85rem 2.5rem; border-bottom: 1px solid var(--border);
+    }
+    nav a { color: var(--accent); text-decoration: none; }
+    nav a:hover { text-decoration: underline; }
+    .page { max-width: 640px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+    h1 {
+      font-size: clamp(1.6rem, 6vw, 2rem);
+      font-weight: 400; letter-spacing: -0.4px; line-height: 1.2; margin-bottom: 0.75rem;
+    }
+    .byline { color: var(--muted); margin-bottom: 2.75rem; }
+    .byline a { color: var(--accent); text-decoration: none; }
+    p { margin-bottom: 1.15rem; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h2 {
+      font-weight: 400; margin: 3.25rem 0 1.4rem;
+      color: var(--muted); letter-spacing: 0.16em;
+    }
+    h3 { font-weight: 600; margin: 1.9rem 0 0.4rem; }
+    .tldr {
+      border-left: 2px solid var(--accent);
+      padding: 0.2rem 0 0.2rem 1.15rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+    code {
+      background: var(--border); padding: 0.1rem 0.4rem; border-radius: 3px;
+      font-family: var(--mono); font-size: 1em;
+    }
+    pre {
+      background: var(--border); border-radius: 4px; padding: 1rem 1.15rem;
+      overflow-x: auto; margin-bottom: 1.15rem;
+    }
+    pre code { background: none; padding: 0; line-height: 1.7; }
+    ul { margin: 0 0 1.15rem 1.2rem; }
+    li { margin-bottom: 0.4rem; }
+    .skills { width: 100%; border-collapse: collapse; margin-bottom: 1.2rem; }
+    .skills th, .skills td { text-align: left; vertical-align: top; padding: 0 1.5rem 1.25rem 0; }
+    .skills td:last-child { padding-right: 0; }
+    .skills th { font-weight: 600; white-space: nowrap; }
+    .table-wrap { overflow-x: auto; }
+    .faq h3 { margin-top: 1.9rem; }
+    .faq p { margin-bottom: 0.6rem; }
+    .back { margin-top: 4rem; }
+    @media (max-width: 700px) {
+      nav { padding: 0.7rem 1.2rem; }
+      .page { padding: 2rem 1.25rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">home</a>
+    <a href="https://github.com/diligent-dilettante/life-planning" target="_blank" rel="noopener">source</a>
+    <time class="clock" id="clock" aria-label="Your local time"></time>
+
+    <span class="theme-switch" role="group" aria-label="Colour theme">
+      <button class="tswitch" id="setLight" data-set="light" aria-pressed="true" aria-label="Light theme">
+        <svg viewBox="-14 -14 28 28" aria-hidden="true" focusable="false">
+          <circle r="5.5" fill="currentColor"/>
+          <g stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <line x1="0" y1="-9" x2="0" y2="-12"/>
+            <line x1="0" y1="9" x2="0" y2="12"/>
+            <line x1="-9" y1="0" x2="-12" y2="0"/>
+            <line x1="9" y1="0" x2="12" y2="0"/>
+            <line x1="-6.4" y1="-6.4" x2="-8.5" y2="-8.5"/>
+            <line x1="6.4" y1="6.4" x2="8.5" y2="8.5"/>
+            <line x1="-6.4" y1="6.4" x2="-8.5" y2="8.5"/>
+            <line x1="6.4" y1="-6.4" x2="8.5" y2="-8.5"/>
+          </g>
+        </svg>
+      </button>
+      <button class="tswitch" id="setDark" data-set="dark" aria-pressed="false" aria-label="Dark theme">
+        <svg viewBox="-14 -14 28 28" aria-hidden="true" focusable="false">
+          <circle class="moon-disc" r="10" fill="none" stroke="currentColor" stroke-width="1"/>
+          <path id="moonLit" fill="currentColor"/>
+        </svg>
+      </button>
+    </span>
+  </nav>
+
+  <div class="page">
+
+    <article>
+
+    <h1>a life planning skill built for week three</h1>
+    <p class="byline">
+      August 2026 · <a href="index.html">Sri Krishna Ravavarapu</a> ·
+      <a href="https://github.com/diligent-dilettante/life-planning" target="_blank" rel="noopener">code on GitHub</a>
+    </p>
+
+    <div class="tldr">
+      <b>tl;dr:</b> life-planning is a free, open-source Claude skill that runs values, direction,
+      goals and a ten-minute weekly check-in as a conversation. it keeps one markdown file and
+      does the tracking, so nothing has to be maintained. MIT licensed.
+      <a href="https://github.com/diligent-dilettante/life-planning" target="_blank" rel="noopener">get it here</a>.
+    </div>
+
+    <p>
+      almost nobody fails at the planning session. that part is enjoyable.
+    </p>
+
+    <p>
+      plans die in week three. nothing gets looked at, something slips, and the slip reads as
+      evidence the whole idea was naive. a year later the same person tries again with a better
+      system, which fails the same way.
+    </p>
+
+    <h2>what life planning is</h2>
+
+    <p>
+      life-planning is a Claude skill for one person working out what they want and what they
+      are going to do about it. it asks questions rather than handing over templates. everything
+      it learns goes into a single markdown file called <code>life-plan.md</code>, so sessions
+      compound instead of restarting. it is free, MIT licensed, and runs on Claude web, Claude
+      Desktop and Claude Code.
+    </p>
+
+    <p>
+      it covers values, direction, twelve-week goals, the commitments a goal has to sit on,
+      money, who carries what at home, and getting unstuck. one person is the design centre.
+      a partner is an optional layer that adds a question worth taking home, and the skill
+      assumes that question never comes back answered.
+    </p>
+
+    <div class="table-wrap">
+      <table class="skills">
+        <tr><th>values</th><td>peak moments, disproportionate irritation, and what each value costs. 20 minutes, or 90.</td></tr>
+        <tr><th>vision</th><td>workview and lifeview, odyssey plans, an ordinary Tuesday three years out. 30 minutes, or 90.</td></tr>
+        <tr><th>goals</th><td>twelve-week goals, WOOP, if-then plans, lead measures. 25 minutes, or 60.</td></tr>
+        <tr><th>foundations</th><td>what a goal is standing on. runway, commitments, the rung that is missing. 20 minutes.</td></tr>
+        <tr><th>check-in</th><td>the weekly one. your numbers read back, one number in, anything in the way. 10 minutes.</td></tr>
+        <tr><th>review</th><td>quarterly scoring and the annual past-year review. 30 minutes.</td></tr>
+        <tr><th>stuck</th><td>immunity to change, a jammed decision, the argument that keeps recurring. 45 minutes.</td></tr>
+        <tr><th>money and load</th><td>money scripts and household load. 45 minutes.</td></tr>
+      </table>
+    </div>
+
+    <h2>how it works</h2>
+
+    <p>
+      every session after the first opens with Claude reading the file and saying where things
+      stand before being asked. what was set, what got logged, what has not been touched in a
+      month. flatly. no praise for a good number and no concern about a bad one, because the
+      moment tracking sounds like judgement the numbers being reported start being wrong.
+    </p>
+
+    <p>
+      the weekly measure is whatever the person said in answer to one question: what is the
+      thing you fully control that you could do this week. a number invented for someone is one
+      they fail against without having agreed to it.
+    </p>
+
+    <p>
+      three quarters in, the file knows things its owner does not. which goals get finished and
+      which get carried. that both stalls landed in the fortnight after a work trip. that a goal
+      with a weekly number attached gets done and one without does not.
+    </p>
+
+    <p>
+      you never open a spreadsheet. a system that needs you to be organised has already failed
+      the person who most needs it.
+    </p>
+
+    <h2>how is it different from other planning skills</h2>
+
+    <p>
+      the published alternatives are template systems. they hand over the frameworks and the
+      documents, and assume the hard part is knowing what to write down.
+    </p>
+
+    <p>
+      the hard part is week three. most of this skill's length sits there and on how the
+      conversation is run. the file on conversational stance is the largest in the repo and
+      contains no frameworks at all. it is mostly about staying quiet, following the flinch
+      rather than the content, and resisting the urge to fix.
+    </p>
+
+    <p>
+      one consequence: when the log shows a goal stalled right after a work trip, the skill
+      does not say so before asking why. offer someone a ready-made external cause and they
+      will take it, sincerely, and the conversation ends there. the open question comes first
+      and the pattern comes later, if it still matters.
+    </p>
+
+    <p>
+      the same instinct governs dropping. most people cannot drop a goal, because dropping feels like
+      failing, so they carry it dead for another quarter and it discredits everything next to
+      it. the skill asks directly whether the goal is still wanted, or whether what is wanted
+      is not to be the person who dropped it.
+    </p>
+
+    <h2>what happens after a lapse</h2>
+
+    <p>
+      a month of silence is the normal case. going back does not require tidying up first.
+      the skill reads back where things were, asks whether it was a bad month or whether the
+      goal was never the one, halves whatever was being attempted, and starts again in about
+      twenty minutes. there is no autopsy. a miss is data, and the skill says so out loud
+      before the first one happens.
+    </p>
+
+    <h2>how it was tested</h2>
+
+    <p>
+      six single-turn evaluations against no-skill baselines, then seven multi-turn
+      conversations run between isolated agents. one agent played a person who did not know a
+      skill existed. another ran the skill without knowing the user was simulated. a third
+      relayed between them and wrote the critique.
+    </p>
+
+    <p>
+      each persona was built to attack a specific failure mode: someone whose partner is not
+      interested, someone demanding a full system on day one, someone deflecting a lapse with a
+      plausible excuse, someone for whom a values session turns into a marriage in trouble,
+      someone about to leave a salary for a business.
+    </p>
+
+    <p>
+      thirty-two defects came out of it. the useful ones were not bugs in the exercises. they
+      were rules that contradicted each other, and habits that felt warm and were not: grading
+      a disclosure, announcing the mechanic out loud, reassurance dressed up as a statistic,
+      handing someone their own words back sharpened.
+    </p>
+
+    <h2>how to install life planning</h2>
+
+    <p>on Claude web, turn on code execution first, then upload the skill:</p>
+
+<pre><code>Settings → Capabilities → Code execution and file creation
+Customize → Skills → + → Create skill → upload life-planning.zip</code></pre>
+
+    <p>on Claude Code, copy the folder in:</p>
+
+<pre><code>cp -r life-planning ~/.claude/skills/</code></pre>
+
+    <p>
+      then describe what is going on, in ordinary words:
+      <i>"help me work out what actually matters to me"</i>,
+      <i>"i made a plan in january and nothing happened"</i>, or
+      <i>"let's do my check-in"</i>. the skill picks the smallest session that fits and
+      starts there. it does not open with a menu.
+    </p>
+
+    <h2>questions</h2>
+
+    <div class="faq">
+
+      <h3>who is it for?</h3>
+      <p>
+        one person, in their own conversation, over months. that is the design centre rather
+        than a fallback, and everything works if they are the only one who ever uses it.
+        someone with a partner gets an optional layer: one question per session worth asking
+        them, and a note of what the partner has and has not seen.
+      </p>
+
+      <h3>does it work without a partner?</h3>
+      <p>
+        yes, completely. the skill was rewritten around the single-user case after testing
+        showed partner-shaped scaffolding leaking through. the belonging rung, friendships and
+        community, gets watched precisely because there is no partner in the room pointing at
+        it.
+      </p>
+
+      <h3>how long is a session?</h3>
+      <p>
+        twenty minutes for the first. ten minutes a week after that. thirty minutes once a
+        quarter. the long versions exist and are usually the wrong choice.
+      </p>
+
+      <h3>where does the data live?</h3>
+      <p>
+        one markdown file, wherever you keep it. nothing gets uploaded anywhere, nothing is
+        locked in, and the whole thing reads in five minutes.
+      </p>
+
+      <h3>do i need Claude Code?</h3>
+      <p>
+        no. it runs on Claude web with code execution enabled, which is where most people will
+        use it.
+      </p>
+
+      <h3>is it therapy?</h3>
+      <p>
+        no, and it says so itself. if what surfaces is bigger than a planning conversation, it
+        names that once, plainly, and then goes back to the planning work rather than
+        continuing to excavate. it is a coaching tool for goals and direction, not a substitute
+        for professional care.
+      </p>
+
+      <h3>is it free?</h3>
+      <p>
+        yes. MIT licensed, open source, nothing needed beyond existing Claude access.
+      </p>
+
+      <h3>will it write the plan for you?</h3>
+      <p>
+        no. it asks and writes down the answers. a section that was not earned in the
+        conversation is left blank rather than filled in to look finished, because a plan
+        someone was handed is one they will not recognise in November.
+      </p>
+
+    </div>
+
+    <h2>credits</h2>
+
+    <p>
+      the exercises are established work, assembled and adapted. GROW, the wheel of life, the
+      ACT bull's eye, workview and lifeview and odyssey plans from designing your life, WOOP
+      and implementation intentions, the twelve week year, lead and lag measures, immunity to
+      change, solution-focused questions, the gottman state of the union, berger's running
+      order for a marriage meeting, eve rodsky's fair play, money scripts, tim ferriss's past
+      year review. full attributions are in the
+      <a href="https://github.com/diligent-dilettante/life-planning" target="_blank" rel="noopener">repo</a>.
+    </p>
+
+    <p>
+      the stance file, which is the one that matters, comes from how good coaches and
+      therapists behave rather than from any framework.
+    </p>
+
+    <h2>try it</h2>
+
+    <p>
+      <a href="https://github.com/diligent-dilettante/life-planning" target="_blank" rel="noopener">GitHub.com/diligent-dilettante/life-planning</a>.
+      if it gets you past week three,
+      <a href="mailto:krishna.ravavarapu@gmail.com">write to me</a>.
+    </p>
+
+    </article>
+
+    <div class="back">
+      <a href="index.html">← back home</a>
+    </div>
+
+  </div>
+
+  <script src="theme.js?v=2" defer></script>
+
+</body>
+</html>
