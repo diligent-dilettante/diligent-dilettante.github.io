@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Not Found | Sri Krishna Ravavarapu</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (!t) { t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    :root { --bg: #fdfdfb; --text: #222; --muted: #6b6b6b; --accent: #1a5276; font-size: 18px; }
+    [data-theme="dark"] { --bg: #1c1c1e; --text: #e0e0e0; --muted: #9a9a9a; --accent: #7ab8e8; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, Georgia, serif;
+      line-height: 1.7; display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; padding: 2rem;
+    }
+    .box { max-width: 460px; }
+    h1 { font-size: 1.5rem; font-weight: 400; margin-bottom: 0.75rem; }
+    p { color: var(--muted); margin-bottom: 1.25rem; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>nothing here</h1>
+    <p>this page doesn't exist, or it moved.</p>
+    <p><a href="/">← back home</a></p>
+  </div>
+</body>
+</html>

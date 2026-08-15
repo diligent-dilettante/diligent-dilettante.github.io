@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    rect { fill: #fdfdfb; }
+    text { fill: #1a5276; }
+    @media (prefers-color-scheme: dark) {
+      rect { fill: #1c1c1e; }
+      text { fill: #7ab8e8; }
+    }
+  </style>
+  <rect width="64" height="64" rx="12"/>
+  <text x="32" y="46" font-family="Charter, Georgia, serif" font-size="40" text-anchor="middle">k</text>
+</svg>
