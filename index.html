@@ -136,8 +136,35 @@
       color: var(--text);
       font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, Georgia, serif;
       line-height: 1.7;
+      overflow-wrap: break-word;
+      transition: background-color 0.45s ease, color 0.45s ease;
     }
     ::selection { background: var(--mark); }
+
+    /* Theme toggle. Moon is drawn at the real current phase; both icons
+       emit a glow whose warmth tracks the visitor's local time of day. */
+    .theme-btn {
+      cursor: pointer; background: none; border: none; padding: 0;
+      color: var(--accent); font: inherit;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px; margin: -12px -12px -12px 0;
+    }
+    .dial { position: relative; width: 20px; height: 20px; }
+    .dial svg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      transition: opacity 0.4s ease, transform 0.55s cubic-bezier(0.4, 0.1, 0.2, 1);
+      filter: drop-shadow(0 0 var(--glow-size, 5px) var(--glow, rgba(10, 95, 168, 0.55)));
+    }
+    .i-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+    .i-sun  { opacity: 0; transform: rotate(-70deg) scale(0.5); }
+    [data-theme="dark"] .i-moon { opacity: 0; transform: rotate(70deg) scale(0.5); }
+    [data-theme="dark"] .i-sun  { opacity: 1; transform: rotate(0deg) scale(1); }
+    .theme-btn:hover .dial svg { --glow-size: 9px; }
+    .moon-disc { opacity: 0.22; }
+    @media (prefers-reduced-motion: reduce) {
+      body { transition: none; }
+      .dial svg { transition: opacity 0.01ms; }
+    }
     a { color: var(--accent); }
     a:focus-visible, button:focus-visible {
       outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px;
@@ -155,11 +182,6 @@
     }
     nav a { text-decoration: none; }
     nav a:hover { text-decoration: underline; }
-    .theme-btn {
-      cursor: pointer; background: none; border: none; color: var(--accent);
-      font: inherit; padding: 0;
-    }
-    .theme-btn:hover { text-decoration: underline; }
     .page { max-width: 640px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
     .hero { margin-bottom: 4rem; }
     .hero h1 {
@@ -210,7 +232,27 @@
     <a href="#work">work</a>
     <a href="#education">education</a>
     <a href="#writing">writing</a>
-    <button class="theme-btn" id="themeBtn" aria-pressed="false">dark</button>
+    <button class="theme-btn" id="themeBtn" aria-pressed="false" aria-label="Switch to dark mode">
+      <span class="dial">
+        <svg class="i-moon" viewBox="-14 -14 28 28" aria-hidden="true" focusable="false">
+          <circle class="moon-disc" r="10" fill="none" stroke="currentColor" stroke-width="1"/>
+          <path id="moonLit" fill="currentColor"/>
+        </svg>
+        <svg class="i-sun" viewBox="-14 -14 28 28" aria-hidden="true" focusable="false">
+          <circle r="5.5" fill="currentColor"/>
+          <g stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <line x1="0" y1="-9" x2="0" y2="-12"/>
+            <line x1="0" y1="9" x2="0" y2="12"/>
+            <line x1="-9" y1="0" x2="-12" y2="0"/>
+            <line x1="9" y1="0" x2="12" y2="0"/>
+            <line x1="-6.4" y1="-6.4" x2="-8.5" y2="-8.5"/>
+            <line x1="6.4" y1="6.4" x2="8.5" y2="8.5"/>
+            <line x1="-6.4" y1="6.4" x2="-8.5" y2="8.5"/>
+            <line x1="6.4" y1="-6.4" x2="8.5" y2="-8.5"/>
+          </g>
+        </svg>
+      </span>
+    </button>
   </nav>
 
   <div class="page">
@@ -484,25 +526,7 @@
 
   </div>
 
-  <script>
-    (function () {
-      var btn = document.getElementById('themeBtn');
-      var root = document.documentElement;
-      var sync = function () {
-        var dark = root.getAttribute('data-theme') === 'dark';
-        btn.textContent = dark ? 'light' : 'dark';
-        btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
-        btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
-      };
-      sync();
-      btn.addEventListener('click', function () {
-        var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
-        sync();
-      });
-    })();
-  </script>
+  <script src="theme.js" defer></script>
 
 </body>
 </html>
