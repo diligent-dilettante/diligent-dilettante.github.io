@@ -8,8 +8,8 @@
   <meta name="author" content="Sri Krishna Ravavarapu" />
   <link rel="canonical" href="https://diligent-dilettante.github.io/business-planner.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <meta name="theme-color" content="#fdfdfb" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#1c1c1e" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#faf8f5" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#1a1917" media="(prefers-color-scheme: dark)" />
   <meta property="og:title" content="Business Planner: An AI That Argues With Your Business Idea" />
   <meta property="og:description" content="A free, open-source bundle of six Claude skills that stress-tests business ideas the way a skeptical advisor would. Built by someone who ran a foundry." />
   <meta property="og:type" content="article" />
@@ -148,20 +148,22 @@
   </script>
   <style>
     :root {
-      --bg: #fdfdfb;
-      --text: #222;
-      --muted: #6b6b6b;
-      --accent: #1a5276;
-      --border: #e6e6e2;
+      --bg: #faf8f5;
+      --text: #2b2926;
+      --muted: #635b51;
+      --accent: #6b5844;
+      --border: #e7e1d8;
+      --mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono', Consolas, monospace;
       font-size: 18px;
     }
     [data-theme="dark"] {
-      --bg: #1c1c1e;
-      --text: #e0e0e0;
-      --muted: #9a9a9a;
-      --accent: #7ab8e8;
-      --border: #2e2e31;
+      --bg: #1a1917;
+      --text: #e8e4dd;
+      --muted: #b0a698;
+      --accent: #c9b79c;
+      --border: #2c2a26;
     }
+    ::selection { background: var(--border); }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background: var(--bg);
@@ -173,7 +175,7 @@
       display: flex; justify-content: flex-end; align-items: center; gap: 1.4rem;
       padding: 0.85rem 2.5rem; border-bottom: 1px solid var(--border);
     }
-    nav a { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+    nav a { color: var(--accent); text-decoration: none; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; }
     nav a:hover { text-decoration: underline; }
     .theme-btn { cursor: pointer; background: none; border: none; color: var(--text); font-size: 1rem; padding: 0; line-height: 1; }
     .page { max-width: 640px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
