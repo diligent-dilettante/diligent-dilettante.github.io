@@ -169,27 +169,31 @@
     a:focus-visible, button:focus-visible {
       outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px;
     }
-    .theme-btn {
-      cursor: pointer; background: none; border: none; padding: 0;
-      color: var(--accent); font: inherit;
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 44px; height: 44px; margin: -12px -12px -12px 0;
+    .clock { color: var(--muted); font-variant-numeric: tabular-nums; }
+    .theme-switch {
+      display: inline-flex; align-items: center; gap: 2px;
+      border: 1px solid var(--border); border-radius: 999px; padding: 3px;
     }
-    .dial { position: relative; width: 20px; height: 20px; }
-    .dial svg {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      transition: opacity 0.4s ease, transform 0.55s cubic-bezier(0.4, 0.1, 0.2, 1);
+    .tswitch {
+      cursor: pointer; background: none; border: none; padding: 0;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 999px;
+      color: var(--muted); opacity: 0.5;
+      transition: opacity 0.35s ease, background-color 0.35s ease, color 0.35s ease;
+    }
+    .tswitch svg { width: 19px; height: 19px; display: block; }
+    .tswitch[aria-pressed="true"] {
+      opacity: 1; color: var(--accent); background: var(--mark);
+    }
+    .tswitch[aria-pressed="true"] svg {
       filter: drop-shadow(0 0 var(--glow-size, 5px) var(--glow, rgba(10, 95, 168, 0.55)));
     }
-    .i-moon { opacity: 1; transform: rotate(0deg) scale(1); }
-    .i-sun  { opacity: 0; transform: rotate(-70deg) scale(0.5); }
-    [data-theme="dark"] .i-moon { opacity: 0; transform: rotate(70deg) scale(0.5); }
-    [data-theme="dark"] .i-sun  { opacity: 1; transform: rotate(0deg) scale(1); }
-    .theme-btn:hover .dial svg { --glow-size: 9px; }
-    .moon-disc { opacity: 0.22; }
+    .tswitch:hover { opacity: 0.85; }
+    .tswitch[aria-pressed="true"]:hover { opacity: 1; --glow-size: 9px; }
+    .moon-disc { opacity: 0.3; }
     @media (prefers-reduced-motion: reduce) {
       body { transition: none; }
-      .dial svg { transition: opacity 0.01ms; }
+      .tswitch, .tswitch svg { transition: none; }
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -257,13 +261,11 @@
   <nav>
     <a href="index.html">home</a>
     <a href="https://github.com/diligent-dilettante/business-planner" target="_blank" rel="noopener">source</a>
-    <button class="theme-btn" id="themeBtn" aria-pressed="false" aria-label="Switch to dark mode">
-      <span class="dial">
-        <svg class="i-moon" viewBox="-14 -14 28 28" aria-hidden="true" focusable="false">
-          <circle class="moon-disc" r="10" fill="none" stroke="currentColor" stroke-width="1"/>
-          <path id="moonLit" fill="currentColor"/>
-        </svg>
-        <svg class="i-sun" viewBox="-14 -14 28 28" aria-hidden="true" focusable="false">
+    <time class="clock" id="clock" aria-label="Your local time"></time>
+
+    <span class="theme-switch" role="group" aria-label="Colour theme">
+      <button class="tswitch" id="setLight" data-set="light" aria-pressed="true" aria-label="Light theme">
+        <svg viewBox="-14 -14 28 28" aria-hidden="true" focusable="false">
           <circle r="5.5" fill="currentColor"/>
           <g stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
             <line x1="0" y1="-9" x2="0" y2="-12"/>
@@ -276,8 +278,14 @@
             <line x1="6.4" y1="-6.4" x2="8.5" y2="-8.5"/>
           </g>
         </svg>
-      </span>
-    </button>
+      </button>
+      <button class="tswitch" id="setDark" data-set="dark" aria-pressed="false" aria-label="Dark theme">
+        <svg viewBox="-14 -14 28 28" aria-hidden="true" focusable="false">
+          <circle class="moon-disc" r="10" fill="none" stroke="currentColor" stroke-width="1"/>
+          <path id="moonLit" fill="currentColor"/>
+        </svg>
+      </button>
+    </span>
   </nav>
 
   <div class="page">
