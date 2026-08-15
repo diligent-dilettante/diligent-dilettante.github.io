@@ -21,31 +21,83 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Sri Krishna Ravavarapu",
-    "alternateName": "Krishna Ravavarapu",
-    "url": "https://diligent-dilettante.github.io/",
-    "email": "krishna.ravavarapu@gmail.com",
-    "jobTitle": "Product Manager, Cross-Border Payments",
-    "description": "Product manager at Razorpay working on cross-border payments. Previously Director of Sales and Growth at Nichrome Superalloy Castings, a specialty foundry in Visakhapatnam, and a consultant to Indian state governments at Auctus Advisors.",
-    "worksFor": { "@type": "Organization", "name": "Razorpay", "url": "https://razorpay.com" },
-    "alumniOf": [
-      { "@type": "CollegeOrUniversity", "name": "Indian School of Business", "url": "https://www.isb.edu" },
-      { "@type": "CollegeOrUniversity", "name": "Indian Institute of Technology Madras", "url": "https://www.iitm.ac.in" }
-    ],
-    "knowsAbout": [
-      "Cross-border payments",
-      "Payment aggregation",
-      "Investment castings and superalloys",
-      "Precision and vacuum casting",
-      "B2B manufacturing sales",
-      "Commodity hedging",
-      "Investment promotion"
-    ],
-    "sameAs": [
-      "https://www.linkedin.com/in/sri-krishna-r/",
-      "https://github.com/diligent-dilettante",
-      "https://github.com/diligent-dilettante/business-planner"
+    "@graph": [
+      {
+        "@type": "ProfilePage",
+        "@id": "https://diligent-dilettante.github.io/#page",
+        "url": "https://diligent-dilettante.github.io/",
+        "name": "Sri Krishna Ravavarapu",
+        "mainEntity": { "@id": "https://diligent-dilettante.github.io/#person" },
+        "dateModified": "2026-08-15"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://diligent-dilettante.github.io/#person",
+        "name": "Sri Krishna Ravavarapu",
+        "alternateName": ["Krishna Ravavarapu", "Sri Krishna R"],
+        "url": "https://diligent-dilettante.github.io/",
+        "email": "krishna.ravavarapu@gmail.com",
+        "jobTitle": "Product Manager, Cross-Border Payments",
+        "description": "Product manager at Razorpay working on cross-border payments, where he launched Apple Pay as the first Indian payment aggregator to support it and built the web and native SDK contracts for future payment methods. Before that he spent three and a half years running Nichrome Superalloy Castings, his family's specialty foundry in Visakhapatnam, and two years at Auctus Advisors consulting for Indian state governments.",
+        "homeLocation": { "@type": "Place", "name": "Hyderabad, India" },
+        "nationality": { "@type": "Country", "name": "India" },
+        "worksFor": { "@type": "Organization", "name": "Razorpay", "url": "https://razorpay.com" },
+        "hasOccupation": [
+          {
+            "@type": "Occupation",
+            "name": "Product Manager, Cross-Border Payments",
+            "occupationLocation": { "@type": "Country", "name": "India" },
+            "skills": "Cross-border payments, payment aggregation, checkout optimisation, BNPL integration, payment SDK design, merchant-of-record architecture"
+          },
+          {
+            "@type": "Occupation",
+            "name": "Director, Sales and Growth",
+            "skills": "B2B manufacturing sales, investment castings, commodity and currency hedging, working capital and trade finance, plant operations"
+          }
+        ],
+        "alumniOf": [
+          {
+            "@type": "CollegeOrUniversity",
+            "name": "Indian School of Business",
+            "url": "https://www.isb.edu"
+          },
+          {
+            "@type": "CollegeOrUniversity",
+            "name": "Indian Institute of Technology Madras",
+            "url": "https://www.iitm.ac.in"
+          }
+        ],
+        "knowsAbout": [
+          "Cross-border payments",
+          "Payment aggregation",
+          "Apple Pay integration",
+          "Buy now pay later (BNPL)",
+          "Investment castings and superalloys",
+          "Precision and vacuum casting",
+          "B2B manufacturing sales",
+          "Commodity hedging and LME nickel",
+          "Working capital and trade finance",
+          "Investment promotion and FDI"
+        ],
+        "sameAs": [
+          "https://www.linkedin.com/in/sri-krishna-r/",
+          "https://github.com/diligent-dilettante"
+        ]
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://github.com/diligent-dilettante/business-planner#app",
+        "name": "Business Planner",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any (runs inside Claude Code, Claude Desktop, or Claude.ai)",
+        "description": "A free, open-source bundle of six Claude skills that plans, validates and stress-tests physical and offline businesses, ending in a GO, NO-GO, PIVOT or PILOT decision.",
+        "url": "https://github.com/diligent-dilettante/business-planner",
+        "codeRepository": "https://github.com/diligent-dilettante/business-planner",
+        "license": "https://opensource.org/licenses/MIT",
+        "isAccessibleForFree": true,
+        "author": { "@id": "https://diligent-dilettante.github.io/#person" },
+        "subjectOf": "https://diligent-dilettante.github.io/business-planner.html"
+      }
     ]
   }
   </script>

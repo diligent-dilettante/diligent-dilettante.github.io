@@ -179,40 +179,47 @@
     nav a:hover { text-decoration: underline; }
     .theme-btn { cursor: pointer; background: none; border: none; color: var(--text); font-size: 1rem; padding: 0; line-height: 1; }
     .page { max-width: 640px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
-    h1 { font-size: 1.7rem; font-weight: 600; letter-spacing: -0.3px; line-height: 1.3; margin-bottom: 0.5rem; }
-    .byline { color: var(--muted); font-size: 0.86rem; margin-bottom: 2.25rem; }
+    h1 { font-size: 2rem; font-weight: 400; letter-spacing: -0.4px; line-height: 1.2; margin-bottom: 0.75rem; }
+    .byline {
+      color: var(--muted); font-family: var(--mono); font-size: 0.72rem;
+      letter-spacing: 0.06em; margin-bottom: 2.75rem;
+    }
     .byline a { color: var(--accent); text-decoration: none; }
-    p { margin-bottom: 1.1rem; }
+    p { margin-bottom: 1.15rem; }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
-    h2 { font-size: 1.18rem; font-weight: 600; margin: 2.25rem 0 0.8rem; }
-    h3 { font-size: 1rem; font-weight: 600; margin: 1.5rem 0 0.4rem; }
+    h2 {
+      font-family: var(--mono);
+      font-size: 0.72rem; font-weight: 400; margin: 3.25rem 0 1.5rem;
+      color: var(--muted); letter-spacing: 0.22em; text-transform: lowercase;
+    }
+    h3 { font-size: 1rem; font-weight: 600; margin: 1.75rem 0 0.4rem; }
     .tldr {
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--accent);
-      border-radius: 6px;
-      padding: 0.9rem 1.1rem;
-      margin-bottom: 1.75rem;
-      font-size: 0.95rem;
+      border-left: 2px solid var(--border);
+      padding: 0.2rem 0 0.2rem 1.15rem;
+      margin-bottom: 2.5rem;
+      font-size: 1.12rem;
+      line-height: 1.6;
     }
     code {
-      background: var(--border); padding: 0.1rem 0.4rem; border-radius: 4px;
-      font-size: 0.85rem; font-family: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Fira Code', Consolas, monospace;
+      background: var(--border); padding: 0.1rem 0.4rem; border-radius: 3px;
+      font-size: 0.85rem; font-family: var(--mono);
     }
     pre {
-      background: var(--border); border-radius: 6px; padding: 0.9rem 1.1rem;
-      overflow-x: auto; margin-bottom: 1.1rem;
+      background: var(--border); border-radius: 4px; padding: 1rem 1.15rem;
+      overflow-x: auto; margin-bottom: 1.15rem;
     }
-    pre code { background: none; padding: 0; font-size: 0.84rem; line-height: 1.6; }
-    ul { margin: 0 0 1.1rem 1.2rem; }
+    pre code { background: none; padding: 0; font-size: 0.82rem; line-height: 1.7; }
+    ul { margin: 0 0 1.15rem 1.2rem; }
     li { margin-bottom: 0.4rem; }
     .skills { width: 100%; border-collapse: collapse; margin-bottom: 1.2rem; font-size: 0.92rem; }
-    .skills th, .skills td { text-align: left; vertical-align: top; padding: 0.5rem 0.8rem 0.5rem 0; border-bottom: 1px solid var(--border); }
-    .skills th { font-weight: 600; white-space: nowrap; }
+    .skills th, .skills td { text-align: left; vertical-align: top; padding: 0 1.5rem 1.25rem 0; }
+    .skills td:last-child { padding-right: 0; }
+    .skills th { font-family: var(--mono); font-size: 0.78rem; font-weight: 400; white-space: nowrap; color: var(--accent); letter-spacing: 0.02em; }
     .table-wrap { overflow-x: auto; }
-    .faq h3 { margin-top: 1.6rem; }
+    .faq h3 { margin-top: 1.9rem; }
     .faq p { margin-bottom: 0.6rem; }
-    .back { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-size: 0.9rem; }
+    .back { margin-top: 4rem; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; }
     @media (max-width: 600px) {
       nav { padding: 0.7rem 1.2rem; }
       .page { padding: 2rem 1.25rem 4rem; }
