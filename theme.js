@@ -102,3 +102,46 @@
   tick();
   setInterval(tick, 30000);
 })();
+
+/* Reading progress. A hairline at the top, tied to how far through the
+   article you are rather than the whole document, so the footer doesn't
+   count as reading. No-ops on pages without the element. */
+(function () {
+  var bar = document.getElementById('progress');
+  var art = document.querySelector('article');
+  if (!bar || !art) return;
+
+  var ticking = false;
+  function update() {
+    var top = art.offsetTop;
+    var span = art.offsetHeight - window.innerHeight;
+    var pct = span <= 0 ? 100 : ((window.scrollY - top) / span) * 100;
+    bar.style.width = Math.max(0, Math.min(100, pct)) + '%';
+    ticking = false;
+  }
+  function onScroll() {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll, { passive: true });
+  update();
+})();
+
+/* Heading anchors. Generated rather than hand-written into every page, so
+   the markup stays clean and no id drifts out of sync with its heading. */
+(function () {
+  var hs = document.querySelectorAll('article h2, article h3');
+  for (var i = 0; i < hs.length; i++) {
+    var h = hs[i];
+    if (!h.id) {
+      h.id = h.textContent.trim().toLowerCase()
+        .replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').slice(0, 60);
+    }
+    var a = document.createElement('a');
+    a.className = 'anchor';
+    a.href = '#' + h.id;
+    a.setAttribute('aria-label', 'Link to this section');
+    a.textContent = '#';
+    h.insertBefore(a, h.firstChild);
+  }
+})();

@@ -30,6 +30,45 @@
     p { color: var(--muted); margin-bottom: 1.25rem; }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
+
+    /* Typesetting. The browser ships most of this now; no library needed.
+       balance keeps headings off a one-word last line, pretty does the same
+       for paragraphs, and hanging punctuation pulls quotes into the margin. */
+    h1, h2, h3 { text-wrap: balance; }
+    p, li, .tldr, .sub { text-wrap: pretty; }
+    body { hanging-punctuation: first last; font-optical-sizing: auto; }
+
+    /* Anchored headings land below the fold edge, not flush against it. */
+    h2, h3, section[id] { scroll-margin-top: 2rem; }
+
+    /* Reading progress. One hairline, accent colour, no chrome around it. */
+    .progress {
+      position: fixed; top: 0; left: 0; height: 2px; width: 0;
+      background: var(--accent); z-index: 10;
+      transition: width 0.1s linear;
+    }
+    @media (prefers-reduced-motion: reduce) { .progress { transition: none; } }
+
+    /* Heading anchors. Invisible until you want them. */
+    .anchor {
+      float: left; margin-left: -1.1em; padding-right: 0.35em;
+      color: var(--muted); opacity: 0; text-decoration: none;
+      font-weight: 400; letter-spacing: 0;
+    }
+    h2:hover .anchor, h3:hover .anchor, .anchor:focus-visible { opacity: 0.55; }
+    .anchor:hover { opacity: 1; text-decoration: none; }
+    @media (max-width: 700px) { .anchor { display: none; } }
+
+    @media print {
+      nav, .theme-switch, .clock, .progress, .anchor, .back { display: none; }
+      body { background: #fff; color: #000; font-size: 11pt; line-height: 1.5; }
+      .page { max-width: none; padding: 0; }
+      a { color: #000; text-decoration: underline; }
+      /* Print the destination, since a printed link is otherwise useless. */
+      article a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; word-break: break-all; }
+      h2, h3 { break-after: avoid; }
+      pre, .tldr { break-inside: avoid; border: 1px solid #ccc; }
+    }
   </style>
 </head>
 <body>
