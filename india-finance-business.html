@@ -3,28 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>India Finance Business: A Free Open-Source Claude Skill for Indian Company Accounts and MSME Financials</title>
-  <meta name="description" content="India Finance Business is a free, open-source Claude skill that reads an Indian private company's accounts: audited statements, Tally trial balances, Form 3CD and scanned PDFs. It builds a provenance-tagged multi-year series, computes working capital and capital productivity, and classifies MSME/Udyam status. Every figure is computed in Python. MIT licensed." />
+  <title>Analyse Your Company's Finances: A Free Open-Source Claude Skill for Indian Business Accounts and MSME Decisions</title>
+  <meta name="description" content="A free, open-source Claude skill that analyses your company's finances so you can decide with the numbers. It reads an Indian private company's accounts: audited statements, Tally trial balances, Form 3CD and scanned PDFs. It builds a provenance-tagged multi-year series, computes working capital and capital productivity, and classifies MSME/Udyam status. Every figure is computed in Python. MIT licensed." />
   <meta name="author" content="Sri Krishna Ravavarapu" />
   <link rel="canonical" href="https://diligent-dilettante.github.io/india-finance-business.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)" />
-  <meta property="og:title" content="India Finance Business: A Claude Skill That Reads Indian Company Accounts" />
+  <meta property="og:title" content="Analyse Your Company's Finances: A Claude Skill for Indian Business Accounts" />
   <meta property="og:description" content="Free and open source. Reads audited statements, Tally exports and Form 3CD, tags what is audited and what is not, and computes the ratios that actually apply to an unlisted company." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://diligent-dilettante.github.io/india-finance-business.html" />
   <meta property="og:site_name" content="Sri Krishna Ravavarapu" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="India Finance Business: A Claude Skill That Reads Indian Company Accounts" />
+  <meta name="twitter:title" content="Analyse Your Company's Finances: A Claude Skill for Indian Business Accounts" />
   <meta name="twitter:description" content="Free and open source. Audited statements, Tally trial balances, Form 3CD, MSME status and working capital. The arithmetic is Python, not a language model." />
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "A Claude Skill That Reads Indian Company Accounts",
-    "description": "How india-finance-business reads audited statements, Tally trial balances and Form 3CD tax audit reports into a provenance-tagged financial series for an Indian private company or MSME.",
+    "headline": "Analyse Your Company's Finances: A Claude Skill for Indian Business Accounts",
+    "description": "How to analyse an Indian company's finances from the documents it actually has: audited statements, Tally trial balances and Form 3CD, turned into a series you can make decisions on.",
     "datePublished": "2026-08-16",
     "dateModified": "2026-08-16",
     "author": { "@type": "Person", "name": "Sri Krishna Ravavarapu" },
@@ -320,31 +320,31 @@
 
     <article>
 
-    <h1>a claude skill that reads indian company accounts</h1>
+    <h1>a claude skill that analyses your company's finances</h1>
     <p class="byline">
       <time datetime="2026-08-16">16 August 2026</time> · 5 min read · <a href="index.html">Sri Krishna Ravavarapu</a> ·
       <a href="https://github.com/diligent-dilettante/india-finance" target="_blank" rel="noopener">code on GitHub</a>
     </p>
 
     <div class="tldr">
-      <b>tl;dr:</b> india-finance-business is a free, open-source Claude skill that reads an
-      indian private company's accounts and tells you what they say. audited statements,
+      <b>tl;dr:</b> a free, open-source Claude skill that analyses your company's finances and
+      gives you something to decide on. audited statements,
       Tally trial balances, Form 3CD, scanned PDFs. it tags what is audited and what is not,
       computes what growth costs in cash, and leaves out the ratios that need a share price.
       every figure comes from Python. it is the company-scope sibling of
-      <a href="india-finance.html">india-finance</a>.
+      <a href="india-finance.html">the personal one</a>.
     </div>
 
-    <h2>what india-finance-business is</h2>
+    <h2>what it does</h2>
     <p>
-      it is a Claude skill for analysing an indian private limited company, LLP or
-      proprietorship from the documents the business actually has, rather than from a clean
-      dataset nobody ever has.
+      it analyses an indian private limited company, LLP or proprietorship from the documents
+      the business actually has, rather than from the clean dataset nobody ever has.
     </p>
     <p>
       point it at a folder of statements and it builds a multi-year series, computes the
-      ratios that apply to an unlisted company, works out the working capital cycle, and
-      says which of its own numbers you should trust.
+      ratios that apply to an unlisted company, works out what growth costs in cash, and says
+      which of its own numbers you should trust. the output is meant to be decided on, not
+      filed.
     </p>
 
     <h2>why generic financial tools break on indian company accounts</h2>
@@ -361,16 +361,16 @@
       COGS and opex and anyone official has to rebuild it before they can use it.
     </p>
     <p>
-      they assume clean input. real financials arrive as a scan of a signed statement, a
+      the second assumption is clean input. real financials arrive as a scan of a signed statement, a
       Tally export somebody emailed, and a tax audit report nobody has opened. the
       ingestion is most of the work.
     </p>
     <p>
-      they treat every number as equally true. an audited figure and an unaudited trial
+      the third is that every number is equally true. an audited figure and an unaudited trial
       balance are different kinds of fact.
     </p>
     <p>
-      and a quarter of their ratio set is dead on arrival. P/E, P/B, EV/EBITDA, PEG all
+      the last one is the ratio set. a quarter of it is dead on arrival. P/E, P/B, EV/EBITDA, PEG all
       need a market price. a private company has none. computing them anyway produces
       nulls, which look like missing data rather than an inapplicable question.
     </p>
@@ -412,7 +412,7 @@
       charge is doing the work.
     </p>
     <p>
-      the same reading rescues bad years. revenue can fall by a third while cash generation
+      the same reading changes how a bad year looks. revenue can fall by a third while cash generation
       holds flat, which tells you the cost base is genuinely variable rather than that the
       company is in trouble.
     </p>
@@ -434,7 +434,7 @@
       saying out loud.
     </p>
 
-    <h2>MSME status is not a footnote</h2>
+    <h2>why MSME and Udyam status changes the numbers</h2>
     <p>
       for a company under the Udyam thresholds, classification is money. registered micro
       and small enterprises must be paid within 45 days under the MSMED Act, and past that,
@@ -443,12 +443,11 @@
     </p>
     <p>
       the skill classifies status, states what attaches, and flags the thing nobody models:
-      these benefits are a function of being small and they erode as the business grows. a
-      company whose tender access rests on MSE exemptions is standing on scaffolding that
-      comes down at the threshold.
+      these benefits are a function of being small and they erode as the business grows. a company whose tender
+      access rests on MSE exemptions loses it at the threshold.
     </p>
 
-    <h2>the document nobody opens</h2>
+    <h2>what Form 3CD reveals that the accounts do not</h2>
     <p>
       Form 3CD, the tax audit report, discloses things the financial statements do not.
       clause 23 lists payments to directors, relatives and associated enterprises. clause 31
@@ -457,8 +456,8 @@
     </p>
     <p>
       track clause 31 across three years and inter-company funding becomes visible. a sister
-      company appearing every year with rising amounts is a rolling credit line, not a loan.
-      it is usually unsecured and uncommitted, and no ratio captures it.
+      company appearing every year with rising amounts is running a rolling credit line. it is
+      usually unsecured and uncommitted, and no ratio captures it.
     </p>
     <p>
       Form 26AS does the other direction. it lists everyone who paid the company and
@@ -466,7 +465,7 @@
       the section first: 2% under 194C and 0.1% under 194Q are a factor of twenty apart.
     </p>
 
-    <h2>how to install india finance business</h2>
+    <h2>how to install it</h2>
     <p>
       clone the repository and copy the skill folder into your Claude skills directory.
     </p>
