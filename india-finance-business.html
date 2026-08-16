@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analyse Your Company's Finances: A Free Open-Source Claude Skill for Indian Business Accounts and MSME Decisions</title>
+  <meta name="description" content="A free, open-source Claude skill that analyses your company's finances so you can decide with the numbers. It reads an Indian private company's accounts: audited statements, Tally trial balances, Form 3CD and scanned PDFs. It builds a provenance-tagged multi-year series, computes working capital and capital productivity, and classifies MSME/Udyam status. Every figure is computed in Python. MIT licensed." />
+  <meta name="author" content="Sri Krishna Ravavarapu" />
+  <link rel="canonical" href="https://diligent-dilettante.github.io/india-finance-business.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)" />
+  <meta property="og:title" content="Analyse Your Company's Finances: A Claude Skill for Indian Business Accounts" />
+  <meta property="og:description" content="Free and open source. Reads audited statements, Tally exports and Form 3CD, tags what is audited and what is not, and computes the ratios that actually apply to an unlisted company." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://diligent-dilettante.github.io/india-finance-business.html" />
+  <meta property="og:site_name" content="Sri Krishna Ravavarapu" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Analyse Your Company's Finances: A Claude Skill for Indian Business Accounts" />
+  <meta name="twitter:description" content="Free and open source. Audited statements, Tally trial balances, Form 3CD, MSME status and working capital. The arithmetic is Python, not a language model." />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Analyse Your Company's Finances: A Claude Skill for Indian Business Accounts",
+    "description": "How to analyse an Indian company's finances from the documents it actually has: audited statements, Tally trial balances and Form 3CD, turned into a series you can make decisions on.",
+    "datePublished": "2026-08-16",
+    "dateModified": "2026-08-16",
+    "author": { "@type": "Person", "name": "Sri Krishna Ravavarapu" },
+    "publisher": { "@type": "Organization", "name": "Sri Krishna Ravavarapu" },
+    "url": "https://diligent-dilettante.github.io/india-finance-business.html",
+    "mainEntityOfPage": "https://diligent-dilettante.github.io/india-finance-business.html",
+    "about": [ "Financial statement analysis", "MSME", "India", "Claude skills" ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "india-finance-business",
+    "alternateName": "india-finance-business Claude skill",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any",
+    "description": "A free, open-source Claude skill for analysing an Indian private company or MSME. It reads audited financial statements, Tally trial balances, Form 3CD tax audit reports, GST returns and scanned PDFs, builds a provenance-tagged multi-year series, and computes working capital cycle, capital productivity, incremental margin and PAT versus PAT plus depreciation. It classifies MSME/Udyam status and maps related-party funding from statutory schedules. All arithmetic runs in Python.",
+    "url": "https://github.com/diligent-dilettante/india-finance",
+    "codeRepository": "https://github.com/diligent-dilettante/india-finance",
+    "license": "https://opensource.org/licenses/MIT",
+    "featureList": [
+      "Reads audited financial statements, including scanned PDFs",
+      "Reads Tally trial balances and checks the period line for partial years",
+      "Tags every year as audited, provisional or trial balance",
+      "Computes working capital cycle and the cash cost of growth",
+      "Computes capital productivity: revenue and EBITDA per rupee employed",
+      "Omits market-price ratios that cannot apply to an unlisted company",
+      "Classifies MSME/Udyam status and the benefits attached",
+      "Maps related parties and inter-company funding from Form 3CD"
+    ],
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+    "author": { "@type": "Person", "name": "Sri Krishna Ravavarapu" }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why not just use a generic financial analyst tool?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Generic tools assume clean JSON or CSV input and a listed company. Indian SME financials arrive as scanned PDFs, Tally exports and tax audit reports, and roughly a quarter of a standard ratio set needs a market price that an unlisted company does not have. The ingestion problem and the provenance problem are most of the actual work, and generic tools skip both."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What documents does it need?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Audited financial statements for the last three to five years are the best starting point, and each one carries a comparative column so it gives two years. A recent trial balance adds currency. Form 3CD adds related-party and inter-company loan detail. A Udyam certificate settles MSME classification. It works with whatever subset exists."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does it work on scanned statements?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Scans are normal for anything older than about 2018 and for many small-firm audit packs. The skill rasterises at 300 DPI before OCR, because lower resolution transposes digits silently, and then validates every extracted figure structurally: the balance sheet must balance, and the year-on-year reserves movement should equal profit after tax."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why are P/E and EV/EBITDA missing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "They need a market price and an unlisted company has none. Standard tooling computes them anyway and returns nulls or nonsense. They are deliberately absent here rather than reported as empty. If a valuation is genuinely needed it comes from a discounted cash flow or a comparable-transaction multiple, with the assumptions stated openly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does it do personal finances too?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. This is company scope only. The sibling skill india-finance covers one person's own money: bank and card statements, spending trends, assets and the old versus new tax regime. They are separate skills with separate scopes and neither reads the other's data."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is it free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. MIT licensed, open source, nothing needed beyond existing Claude access. It sits in the same repository as india-finance."
+        }
+      }
+    ]
+  }
+  </script>
+<style>
+    :root {
+      --bg: #ffffff;
+      --text: #1b1b1d;
+      --muted: #5c5f66;
+      --accent: #0a5fa8;
+      --border: #e3e5e9;
+      --mark: rgba(10, 95, 168, 0.16);
+      --mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono', Consolas, monospace;
+      font-size: 18px;
+    }
+    [data-theme="dark"] {
+      --bg: #121316;
+      --text: #eceef1;
+      --muted: #9ba1aa;
+      --accent: #7cbcff;
+      --border: #282b31;
+      --mark: rgba(124, 188, 255, 0.24);
+    }
+    ::selection { background: var(--mark); }
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px;
+    }
+    .clock { color: var(--muted); font-variant-numeric: tabular-nums; }
+    .theme-switch {
+      display: inline-flex; align-items: center; gap: 2px;
+      border: 1px solid var(--border); border-radius: 999px; padding: 3px;
+    }
+    .tswitch {
+      cursor: pointer; background: none; border: none; padding: 0;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 999px;
+      color: var(--muted); opacity: 0.5;
+      transition: opacity 0.35s ease, background-color 0.35s ease, color 0.35s ease;
+    }
+    .tswitch svg { width: 19px; height: 19px; display: block; }
+    .tswitch[aria-pressed="true"] {
+      opacity: 1; color: var(--accent); background: var(--mark);
+    }
+    .tswitch[aria-pressed="true"] svg {
+      filter: drop-shadow(0 0 var(--glow-size, 5px) var(--glow, rgba(10, 95, 168, 0.55)));
+    }
+    .tswitch:hover { opacity: 0.85; }
+    .tswitch[aria-pressed="true"]:hover { opacity: 1; --glow-size: 9px; }
+    .moon-disc { opacity: 0.3; }
+    @media (prefers-reduced-motion: reduce) {
+      body { transition: none; }
+      .tswitch, .tswitch svg { transition: none; }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, Georgia, serif;
+      line-height: 1.75;
+      overflow-wrap: break-word;
+      transition: background-color 0.45s ease, color 0.45s ease;
+    }
+    nav {
+      display: flex; justify-content: flex-end; align-items: center; gap: 1.4rem;
+      padding: 0.85rem 2.5rem; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 9; background: var(--bg);
+    }
+    nav a { color: var(--accent); text-decoration: none; }
+    nav a:hover { text-decoration: underline; }
+    .page { max-width: 640px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+    h1 {
+      font-size: clamp(1.6rem, 6vw, 2rem);
+      font-weight: 400; letter-spacing: -0.4px; line-height: 1.2; margin-bottom: 0.75rem;
+    }
+    .byline { color: var(--muted); margin-bottom: 2.75rem; }
+    .byline a { color: var(--accent); text-decoration: none; }
+    p { margin-bottom: 1.15rem; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h2 {
+      font-weight: 400; margin: 3.25rem 0 1.4rem;
+      color: var(--muted); letter-spacing: 0.16em;
+    }
+    h3 { font-weight: 600; margin: 1.9rem 0 0.4rem; }
+    .tldr {
+      border-left: 2px solid var(--accent);
+      padding: 0.2rem 0 0.2rem 1.15rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+    code {
+      background: var(--border); padding: 0.1rem 0.4rem; border-radius: 3px;
+      font-family: var(--mono); font-size: 1em;
+    }
+    pre {
+      background: var(--border); border-radius: 4px; padding: 1rem 1.15rem;
+      overflow-x: auto; margin-bottom: 1.15rem;
+    }
+    pre code { background: none; padding: 0; line-height: 1.7; }
+    ul { margin: 0 0 1.15rem 1.2rem; }
+    li { margin-bottom: 0.4rem; }
+    .skills { width: 100%; border-collapse: collapse; margin-bottom: 1.2rem; }
+    .skills th, .skills td { text-align: left; vertical-align: top; padding: 0 1.5rem 1.25rem 0; }
+    .skills td:last-child { padding-right: 0; }
+    .skills th { font-weight: 600; white-space: nowrap; }
+    .table-wrap { overflow-x: auto; }
+    .faq h3 { margin-top: 1.9rem; }
+    .faq p { margin-bottom: 0.6rem; }
+    .back { margin-top: 4rem; }
+    @media (max-width: 700px) {
+      nav { padding: 0.7rem 1.2rem; }
+      .page { padding: 2rem 1.25rem 4rem; }
+    }
+
+    /* Typesetting. The browser ships most of this now; no library needed.
+       balance keeps headings off a one-word last line, pretty does the same
+       for paragraphs, and hanging punctuation pulls quotes into the margin. */
+    h1, h2, h3 { text-wrap: balance; }
+    p, li, .tldr, .sub { text-wrap: pretty; }
+    body { hanging-punctuation: first last; font-optical-sizing: auto; }
+
+    /* Anchored headings land below the fold edge, not flush against it. */
+    h2, h3, section[id] { scroll-margin-top: 5.5rem; }
+
+    /* Reading progress. One hairline, accent colour, no chrome around it. */
+    .progress {
+      position: fixed; top: 0; left: 0; height: 2px; width: 0;
+      background: var(--accent); z-index: 20;
+      transition: width 0.1s linear;
+    }
+    @media (prefers-reduced-motion: reduce) { .progress { transition: none; } }
+
+    /* Heading anchors. Invisible until you want them. */
+    .anchor {
+      float: left; margin-left: -1.1em; padding-right: 0.35em;
+      color: var(--muted); opacity: 0; text-decoration: none;
+      font-weight: 400; letter-spacing: 0;
+    }
+    h2:hover .anchor, h3:hover .anchor, .anchor:focus-visible { opacity: 0.55; }
+    .anchor:hover { opacity: 1; text-decoration: none; }
+    @media (max-width: 700px) { .anchor { display: none; } }
+
+    @media print {
+      nav, .theme-switch, .clock, .progress, .anchor, .back { display: none; }
+      body { background: #fff; color: #000; font-size: 11pt; line-height: 1.5; }
+      .page { max-width: none; padding: 0; }
+      a { color: #000; text-decoration: underline; }
+      /* Print the destination, since a printed link is otherwise useless. */
+      article a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; word-break: break-all; }
+      h2, h3 { break-after: avoid; }
+      pre, .tldr { break-inside: avoid; border: 1px solid #ccc; }
+    }
+
+    /* Real quotations only. A rule and a colour shift, no scale change, so
+       the two-size type decision holds. Not for repeating your own sentence
+       back at the reader; a short standalone paragraph already does that. */
+    blockquote {
+      margin: 1.9rem 0; padding-left: 1.15rem;
+      border-left: 2px solid var(--border);
+      color: var(--muted);
+    }
+    blockquote p:last-child { margin-bottom: 0; }
+    blockquote cite {
+      display: block; margin-top: 0.5rem; font-style: normal;
+      font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <nav>
+    <a href="index.html">home</a>
+    <a href="https://github.com/diligent-dilettante/india-finance" target="_blank" rel="noopener">source</a>
+    <time class="clock" id="clock" aria-label="Your local time"></time>
+
+    <span class="theme-switch" role="group" aria-label="Colour theme">
+      <button class="tswitch" id="setLight" data-set="light" aria-pressed="true" aria-label="Light theme">
+        <svg viewBox="-14 -14 28 28" aria-hidden="true" focusable="false">
+          <circle r="5.5" fill="currentColor"/>
+          <g stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <line x1="0" y1="-9" x2="0" y2="-12"/>
+            <line x1="0" y1="9" x2="0" y2="12"/>
+            <line x1="-9" y1="0" x2="-12" y2="0"/>
+            <line x1="9" y1="0" x2="12" y2="0"/>
+            <line x1="-6.4" y1="-6.4" x2="-8.5" y2="-8.5"/>
+            <line x1="6.4" y1="6.4" x2="8.5" y2="8.5"/>
+            <line x1="-6.4" y1="6.4" x2="-8.5" y2="8.5"/>
+            <line x1="6.4" y1="-6.4" x2="8.5" y2="-8.5"/>
+          </g>
+        </svg>
+      </button>
+      <button class="tswitch" id="setDark" data-set="dark" aria-pressed="false" aria-label="Dark theme">
+        <svg viewBox="-14 -14 28 28" aria-hidden="true" focusable="false">
+          <circle class="moon-disc" r="10" fill="none" stroke="currentColor" stroke-width="1"/>
+          <path id="moonLit" fill="currentColor"/>
+        </svg>
+      </button>
+    </span>
+  </nav>
+
+  <div class="page">
+
+    <article>
+
+    <h1>a claude skill that analyses your company's finances</h1>
+    <p class="byline">
+      <time datetime="2026-08-16">16 August 2026</time> · 5 min read · <a href="index.html">Sri Krishna Ravavarapu</a> ·
+      <a href="https://github.com/diligent-dilettante/india-finance" target="_blank" rel="noopener">code on GitHub</a>
+    </p>
+
+    <div class="tldr">
+      <b>tl;dr:</b> a free, open-source Claude skill that analyses your company's finances and
+      gives you something to decide on. audited statements,
+      Tally trial balances, Form 3CD, scanned PDFs. it tags what is audited and what is not,
+      computes what growth costs in cash, and leaves out the ratios that need a share price.
+      every figure comes from Python. it is the company-scope sibling of
+      <a href="india-finance.html">the personal one</a>.
+    </div>
+
+    <h2>what it does</h2>
+    <p>
+      it analyses an indian private limited company, LLP or proprietorship from the documents
+      the business actually has, rather than from the clean dataset nobody ever has.
+    </p>
+    <p>
+      point it at a folder of statements and it builds a multi-year series, computes the
+      ratios that apply to an unlisted company, works out what growth costs in cash, and says
+      which of its own numbers you should trust. the output is meant to be decided on, not
+      filed.
+    </p>
+
+    <h2>why generic financial tools break on indian company accounts</h2>
+    <p>
+      there are several competent financial-analyst skills already. they compute twenty
+      ratios, run a DCF, do budget variance. they share four assumptions that do not hold
+      here.
+    </p>
+    <p>
+      they assume a jurisdiction that does not exist. one states outright that it applies
+      universal formulas without country-specific adjustment. an indian P&amp;L runs on
+      Schedule III of the Companies Act: revenue from operations, cost of materials
+      consumed, employee benefits expense, finance costs. restructure that into revenue,
+      COGS and opex and anyone official has to rebuild it before they can use it.
+    </p>
+    <p>
+      the second assumption is clean input. real financials arrive as a scan of a signed statement, a
+      Tally export somebody emailed, and a tax audit report nobody has opened. the
+      ingestion is most of the work.
+    </p>
+    <p>
+      the third is that every number is equally true. an audited figure and an unaudited trial
+      balance are different kinds of fact.
+    </p>
+    <p>
+      the last one is the ratio set. a quarter of it is dead on arrival. P/E, P/B, EV/EBITDA, PEG all
+      need a market price. a private company has none. computing them anyway produces
+      nulls, which look like missing data rather than an inapplicable question.
+    </p>
+
+    <h2>why provenance matters more than ratios</h2>
+    <p>
+      every year in the series carries a tag: audited, provisional, or trial balance. the
+      tag follows the number into the output.
+    </p>
+    <p>
+      this sounds bureaucratic until it changes an answer. a Tally export prints its actual
+      date range, and it is regularly something like 1-Apr-2021 to 11-Mar-2022. twenty days
+      short. compare that to a full audited year and you will report a decline that never
+      happened.
+    </p>
+    <p>
+      the same discipline catches the reverse. documents named <i>bidder turnover</i> or
+      <i>PQ pack</i> are frequently not certificates at all, but several years of complete
+      audited statements stapled together for a tender. an entire audited year can be
+      sitting inside a file whose name suggests it holds one number.
+    </p>
+    <p>
+      two structural checks run before anything is computed. does the balance sheet balance.
+      does the year-on-year movement in reserves equal profit after tax. the second is free
+      and it is invaluable on a bad scan where the P&amp;L is mangled but the balance sheet
+      is legible.
+    </p>
+
+    <h2>why reported profit is not performance</h2>
+    <p>
+      a company that has just bought plant shows depreciation stepping up sharply. that
+      depresses reported profit without touching cash. read profit alone and you conclude
+      "flat" about a business whose cash generation is growing.
+    </p>
+    <p>
+      so the skill computes profit after tax <i>plus depreciation</i> alongside profit, across
+      the whole series. revenue up 130%, profit up 50%, and profit plus depreciation up
+      140% is not a stagnant business. it is a business mid-capex, and the depreciation
+      charge is doing the work.
+    </p>
+    <p>
+      the same reading changes how a bad year looks. revenue can fall by a third while cash generation
+      holds flat, which tells you the cost base is genuinely variable rather than that the
+      company is in trouble.
+    </p>
+
+    <h2>what growth costs in cash</h2>
+    <p>
+      the working capital section is usually the most useful part of the output, and it is
+      the part standard ratio sets under-serve.
+    </p>
+    <p>
+      receivable days, inventory days, payable days, and the cash conversion cycle. then net
+      working capital as a percentage of revenue, which answers a question owners actually
+      ask: what does another rupee of sales cost me before any profit arrives. a business
+      sitting at 17% has to find seventeen paise of funding for every extra rupee it bills.
+    </p>
+    <p>
+      a negative cycle, where customer money lands before the supplier is paid, means growth
+      funds itself. that is structurally safer than a margin advantage and it is worth
+      saying out loud.
+    </p>
+
+    <h2>why MSME and Udyam status changes the numbers</h2>
+    <p>
+      for a company under the Udyam thresholds, classification is money. registered micro
+      and small enterprises must be paid within 45 days under the MSMED Act, and past that,
+      compound interest runs at three times the RBI bank rate and is not deductible for the
+      buyer. in public procurement the status brings EMD exemption and purchase preference.
+    </p>
+    <p>
+      the skill classifies status, states what attaches, and flags the thing nobody models:
+      these benefits are a function of being small and they erode as the business grows. a company whose tender
+      access rests on MSE exemptions loses it at the threshold.
+    </p>
+
+    <h2>what Form 3CD reveals that the accounts do not</h2>
+    <p>
+      Form 3CD, the tax audit report, discloses things the financial statements do not.
+      clause 23 lists payments to directors, relatives and associated enterprises. clause 31
+      lists every loan taken and repaid above the threshold, with the lender's name, the
+      amount, and the maximum outstanding during the year.
+    </p>
+    <p>
+      track clause 31 across three years and inter-company funding becomes visible. a sister
+      company appearing every year with rising amounts is running a rolling credit line. it is
+      usually unsecured and uncommitted, and no ratio captures it.
+    </p>
+    <p>
+      Form 26AS does the other direction. it lists everyone who paid the company and
+      deducted tax. divide the TDS by the rate and you recover what they billed. identify
+      the section first: 2% under 194C and 0.1% under 194Q are a factor of twenty apart.
+    </p>
+
+    <h2>how to install it</h2>
+    <p>
+      clone the repository and copy the skill folder into your Claude skills directory.
+    </p>
+    <pre><code>git clone https://github.com/diligent-dilettante/india-finance.git
+cp -r india-finance/india-finance-business ~/.claude/skills/</code></pre>
+    <p>
+      then ask it something. "read these statements and tell me what they say" is enough to
+      start. it will ask which documents exist before it asks for anything else, because
+      most people do not know what they have until they see the list.
+    </p>
+
+    <h2>questions</h2>
+
+    <h3>why not just use a generic financial analyst tool?</h3>
+    <p>
+      generic tools assume clean input and a listed company. indian SME financials arrive as
+      scans, Tally exports and tax audit reports, and a quarter of a standard ratio set
+      needs a share price that does not exist. the ingestion and the provenance are most of
+      the work, and generic tools skip both.
+    </p>
+
+    <h3>what documents does it need?</h3>
+    <p>
+      audited statements for three to five years are the best start, and each carries a
+      comparative column so one document gives two years. a recent trial balance adds
+      currency. Form 3CD adds related-party detail. a Udyam certificate settles
+      classification. it works with whatever subset exists.
+    </p>
+
+    <h3>does it work on scanned statements?</h3>
+    <p>
+      yes. scans are normal for anything before about 2018. it rasterises at 300 DPI before
+      OCR, because lower resolution transposes digits silently, then validates every figure
+      structurally rather than by eye.
+    </p>
+
+    <h3>why are P/E and EV/EBITDA missing?</h3>
+    <p>
+      they need a market price and an unlisted company has none. they are deliberately
+      absent rather than reported as empty. if a valuation is genuinely needed it comes from
+      a DCF or a transaction multiple, with the assumptions stated.
+    </p>
+
+    <h3>does it do personal finances too?</h3>
+    <p>
+      no. company scope only. <a href="india-finance.html">india-finance</a> covers one
+      person's own money. separate skills, separate scopes, and neither reads the other's
+      data.
+    </p>
+
+    <h3>is it free?</h3>
+    <p>
+      yes. MIT licensed, open source, nothing beyond existing Claude access. same repository
+      as india-finance.
+    </p>
+
+    <h2>try it</h2>
+
+    <p>
+      <a href="https://github.com/diligent-dilettante/india-finance" target="_blank" rel="noopener">GitHub.com/diligent-dilettante/india-finance</a>.
+      if it finds something in your own accounts you had not noticed,
+      <a href="mailto:krishna.ravavarapu@gmail.com">write to me</a>.
+    </p>
+
+    <p>
+      for one person's money rather than a company's, <a href="india-finance.html">india-finance</a>
+      is the sibling skill. if you are planning a business rather than reading one,
+      <a href="business-planner.html">business-planner</a> covers the plan and the model.
+    </p>
+
+</article>
+
+    <div class="back">
+      <a href="index.html">← back home</a>
+    </div>
+
+  </div>
+
+  <script src="theme.js?v=3" defer></script>
+
+</body>
+</html>
