@@ -67,6 +67,36 @@ article was fine; the title was describing a narrower thing than the page delive
 
 ---
 
+## Who reads this, including the one that is easy to forget
+
+Four readers, and they want different things. A line that serves one can cost you with
+another.
+
+| Reader | Wants | Serve them with |
+|---|---|---|
+| **Hiring manager** (primary) | evidence of clear thinking and shipped work | a precisely described problem, an honest outcome, dry tone |
+| **Someone with the problem** | to feel understood before they trust anything | problem detail specific enough that they recognise themselves |
+| **A future customer** | to believe it works and know what it costs them | what they end up holding, and the honest limits |
+| **A competitor** | your roadmap, free | nothing. see below |
+
+**The competitor is a real reader of this site.** The foundry operates in a small market
+with named rivals who can and do read a public bio.
+
+**State what exists. Never state what is planned.** No roadmaps, no target markets not yet
+entered, no capability being built, no capex direction. "the current push is precision and
+vacuum casting, aimed at defence and aerospace" told a competitor exactly which market to
+defend and which capability to price against, and it appeared twice on the homepage before
+it was caught.
+
+Current and committed is fine. Solar that is already generating, a year that was busier
+than the one before. Those are facts a competitor learns anyway, and they carry the
+operator credibility the site needs.
+
+The same restraint applies to the skills. What a skill does is public. What is coming next
+is not.
+
+---
+
 ## What a skill article may and may not give away
 
 **This governs every skill-related article.** Free-form and opinion pieces are a different
