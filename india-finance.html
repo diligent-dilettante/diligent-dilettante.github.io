@@ -295,6 +295,20 @@
       h2, h3 { break-after: avoid; }
       pre, .tldr { break-inside: avoid; border: 1px solid #ccc; }
     }
+
+    /* Real quotations only. A rule and a colour shift, no scale change, so
+       the two-size type decision holds. Not for repeating your own sentence
+       back at the reader; a short standalone paragraph already does that. */
+    blockquote {
+      margin: 1.9rem 0; padding-left: 1.15rem;
+      border-left: 2px solid var(--border);
+      color: var(--muted);
+    }
+    blockquote p:last-child { margin-bottom: 0; }
+    blockquote cite {
+      display: block; margin-top: 0.5rem; font-style: normal;
+      font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.04em;
+    }
   </style>
 </head>
 <body>
