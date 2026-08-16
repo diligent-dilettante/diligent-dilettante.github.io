@@ -239,6 +239,7 @@
     nav {
       display: flex; justify-content: flex-end; align-items: center; gap: 1.4rem;
       padding: 0.85rem 2.5rem; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 9; background: var(--bg);
     }
     nav a { color: var(--accent); text-decoration: none; }
     nav a:hover { text-decoration: underline; }
@@ -295,12 +296,12 @@
     body { hanging-punctuation: first last; font-optical-sizing: auto; }
 
     /* Anchored headings land below the fold edge, not flush against it. */
-    h2, h3, section[id] { scroll-margin-top: 2rem; }
+    h2, h3, section[id] { scroll-margin-top: 5.5rem; }
 
     /* Reading progress. One hairline, accent colour, no chrome around it. */
     .progress {
       position: fixed; top: 0; left: 0; height: 2px; width: 0;
-      background: var(--accent); z-index: 10;
+      background: var(--accent); z-index: 20;
       transition: width 0.1s linear;
     }
     @media (prefers-reduced-motion: reduce) { .progress { transition: none; } }
