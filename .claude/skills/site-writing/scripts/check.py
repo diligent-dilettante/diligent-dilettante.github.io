@@ -38,6 +38,22 @@ def body_text(src):
     return re.sub(r"<script.*?</script>|<style.*?</style>", "", src, flags=re.S)
 
 
+# Terms that mean the article is explaining how a skill works rather than what it
+# does for the reader. Word-boundary matched, because a naive substring search for
+# "UDIN" matches "including" and reports three phantom leaks.
+TECHNIQUE = [
+    r"300 DPI", r"reserves movement", r"UDIN", r"clause 2[0-9]",
+    r"clause 3[0-9]", r"cost of materials consumed", r"inverted sign convention",
+    r"pre-debit notification window", r"tie check", r"Schedule III of the Companies",
+]
+
+
+def check_technique(name, body):
+    for pat in TECHNIQUE:
+        if re.search(pat, body, re.I):
+            WARN.append(f"{name}: {pat} reads as method rather than benefit, see SKILL.md")
+
+
 def check_page(path):
     name = os.path.basename(path)
     src = open(path, encoding="utf-8").read()
@@ -83,6 +99,8 @@ def check_page(path):
     for target in sorted(set(re.findall(r'href="([a-z0-9][a-z0-9-]*\.html)"', src))):
         if not os.path.exists(os.path.join(ROOT, target)):
             FAIL.append(f"{name}: links to {target}, which does not exist")
+
+    check_technique(name, body)
 
     words = len(strip(body).split())
     if name not in ("index.html", "404.html") and words < 1000:
