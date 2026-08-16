@@ -212,6 +212,9 @@
     .row-text a { text-decoration: underline; text-underline-offset: 0.16em; text-decoration-thickness: 1px; }
     .sub { display: block; color: var(--muted); line-height: 1.6; }
     .sub.nested { margin-top: 0.4rem; padding-left: 0.9rem; border-left: 1px solid var(--border); }
+    .grp { font-family: var(--mono, ui-monospace, monospace); font-size: 0.72rem;
+           letter-spacing: 0.16em; color: var(--muted); margin: 1.6rem 0 0.5rem; }
+    .grp:first-of-type { margin-top: 0.2rem; }
     .foot { margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
     .social-row { display: flex; justify-content: center; gap: 0.6rem; margin-bottom: 1.1rem; }
     .social-row a {
@@ -485,36 +488,26 @@
     <section id="writing">
       <h2>writing</h2>
 
-      <div class="row">
-        <div class="row-date">Aug 2026</div>
-        <div class="row-text">
-          <a href="india-payments.html">collecting payments in india, and the rules that break subscriptions</a>
-          <span class="sub">on integration paths, the three recurring rails, and why your settlement never matches your revenue</span>
-        </div>
-      </div>
+      <div class="grp">money</div>
 
       <div class="row">
         <div class="row-date">Aug 2026</div>
         <div class="row-text">
-          <a href="india-finance.html">a claude skill that tells you where your money went</a>
+          <a href="india-finance.html">a personal finance skill that tells you where your money went</a>
           <span class="sub">on why generic budgeting tools break on indian statements, and keeping the arithmetic out of the model</span>
-          <span class="sub nested"><a href="india-finance-business.html">a claude skill that analyses your company's finances</a> · the company-scope sibling: audited statements, Tally exports, what growth costs in cash</span>
+          <span class="sub nested"><a href="india-finance-business.html">a business finance skill that reads your company's books</a> · audited statements, Tally exports, and what growth costs in cash</span>
+          <span class="sub nested"><a href="india-payments.html">a payments skill for taking money in india</a> · checkout paths, recurring mandates, and why settlements never match revenue</span>
         </div>
       </div>
 
-      <div class="row">
-        <div class="row-date">Aug 2026</div>
-        <div class="row-text">
-          <a href="life-planning.html">a life planning skill built for week three</a>
-          <span class="sub">on why plans die after the planning session, and what a skill has to do about it</span>
-        </div>
-      </div>
+      <div class="grp">planning</div>
 
       <div class="row">
         <div class="row-date">Aug 2026</div>
         <div class="row-text">
           <a href="business-planner.html">why i built a business planner that argues with you</a>
           <span class="sub">on turning an AI into the skeptical advisor most first-time founders never get</span>
+          <span class="sub nested"><a href="life-planning.html">a life planning skill built for week three</a> · on why plans die after the planning session</span>
         </div>
       </div>
     </section>
@@ -526,7 +519,7 @@
       <div class="row">
         <div class="row-date">2024 – 2025</div>
         <div class="row-text">
-          <b>PGP, strategy and entrepreneurship</b>
+          <b>PGP, marketing and entrepreneurship</b>
           <span class="sub"><a href="https://www.isb.edu" target="_blank" rel="noopener">Indian School of Business</a></span>
         </div>
       </div>

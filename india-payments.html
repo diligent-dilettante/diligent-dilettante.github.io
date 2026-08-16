@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Collecting Payments in India: Integration Paths, Recurring Mandates and Settlement Reconciliation</title>
+  <title>Taking Payments in India: Checkout Paths, Recurring Mandates, Settlement and GST</title>
   <meta name="description" content="How online payment collection works in India: payment links, hosted checkout, drop-in and server-to-server; the three recurring rails (UPI Autopay, e-NACH, card standing instructions) and the RBI rules that break subscriptions after launch; and why your provider settles net while your books need gross. Includes a free, open-source Claude skill. MIT licensed." />
   <meta name="author" content="Sri Krishna Ravavarapu" />
   <link rel="canonical" href="https://diligent-dilettante.github.io/india-payments.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)" />
-  <meta property="og:title" content="Collecting Payments in India, and the Rules That Break Subscriptions" />
+  <meta property="og:title" content="Taking Payments in India: Checkout Paths, Recurring Mandates and Settlement" />
   <meta property="og:description" content="Integration paths, the three recurring rails, and why a subscription that worked fine starts failing after a price rise. Written by someone who works in payments, which is why it names no favourite." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://diligent-dilettante.github.io/india-payments.html" />
   <meta property="og:site_name" content="Sri Krishna Ravavarapu" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Collecting Payments in India, and the Rules That Break Subscriptions" />
+  <meta name="twitter:title" content="Taking Payments in India: Checkout Paths, Recurring Mandates and Settlement" />
   <meta name="twitter:description" content="Integration paths, the three recurring rails, and why a subscription that worked fine starts failing after a price rise." />
 
   <script type="application/ld+json">
@@ -79,7 +79,7 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "What is the difference between a payment gateway, a payment aggregator and a payment orchestrator?",
+        "name": "what's the difference between a gateway, an aggregator and an orchestrator?",
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "A payment gateway is the technology that moves a transaction to a bank or network. A payment aggregator onboards merchants under its own arrangement, collects customer money on their behalf and settles it to them; because it holds funds in transit this is a regulated activity in India requiring RBI authorisation and a designated settlement account. A payment orchestrator sits above several providers and routes between them without holding funds. Most of what is called a gateway in India is actually an aggregator."
@@ -87,7 +87,7 @@
       },
       {
         "@type": "Question",
-        "name": "Which payment provider should I use in India?",
+        "name": "which payment provider should i use?",
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "There is no single right answer, because pricing is negotiated and category acceptance decides more launches than the headline rate. Evaluate on effective rate per method at your volume, settlement cycle, whether a rolling reserve applies, whether your business category is accepted, which recurring rails are supported, the chargeback process and fee, out-of-hours support, and what happens to your card tokens if you leave. Confirm the provider appears on the RBI list of authorised payment aggregators before letting it hold your money."
@@ -95,7 +95,7 @@
       },
       {
         "@type": "Question",
-        "name": "Why do recurring payments fail after a price increase in India?",
+        "name": "why do subscriptions fail after a price rise?",
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "Indian recurring mandates carry a per-transaction ceiling. Below it, debits run unattended. Above it, the customer must authenticate that specific charge with an additional factor. A subscription that worked at a lower price starts failing once the price crosses the threshold, and it fails quietly. Confirm the current threshold before designing around it and make crossing it degrade gracefully."
@@ -103,7 +103,7 @@
       },
       {
         "@type": "Question",
-        "name": "What are the recurring payment options in India?",
+        "name": "what are the recurring options in india?",
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "Three separate rails. UPI Autopay is registered with a UPI PIN in seconds and suits small-ticket consumer subscriptions. e-NACH debits a bank account, takes longer to register and suits larger tickets such as loans and SIPs. Card standing instructions operate under the RBI e-mandate framework. Each has different registration, limits and failure modes, and offering more than one improves conversion because registration abandonment differs between them."
@@ -111,7 +111,7 @@
       },
       {
         "@type": "Question",
-        "name": "Do I need PCI DSS compliance to accept payments?",
+        "name": "do i need PCI DSS compliance?",
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "Only if you collect card details yourself. Hosted checkout and drop-in integrations send card data directly to the provider, keeping the merchant at the lightest compliance tier. Server-to-server integration places the merchant in full PCI DSS scope, requiring annual assessment, network segmentation, scanning and ongoing controls. That cost is why it is rarely worth it without high volume or a genuine multi-provider routing requirement."
@@ -119,7 +119,7 @@
       },
       {
         "@type": "Question",
-        "name": "Is India Payments free?",
+        "name": "is it free?",
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "Yes. It is MIT licensed and open source on GitHub at github.com/diligent-dilettante/india-payments, and needs nothing beyond existing access to Claude."
@@ -127,7 +127,7 @@
       },
       {
         "@type": "Question",
-        "name": "Why do payment settlements not match my revenue?",
+        "name": "why don't my settlements match my revenue?",
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "Providers settle net. The payout arrives after gateway fees, GST on those fees, refunds netted off and sometimes a rolling reserve, with chargebacks deducted from later payouts. Recording the settled amount as revenue understates turnover and forfeits input tax credit on the fee GST. Reconcile three ways each month, matching paid orders to the provider transaction report and then to bank credits, and recognise revenue on the transaction date rather than the settlement date."
@@ -346,7 +346,7 @@
 
     <article>
 
-    <h1>collecting payments in india, and the rules that break subscriptions</h1>
+    <h1>a payments skill for taking money in india</h1>
     <p class="byline">
       <time datetime="2026-08-16">16 August 2026</time> · 5 min read · <a href="index.html">Sri Krishna Ravavarapu</a> ·
       <a href="https://github.com/diligent-dilettante/india-payments" target="_blank" rel="noopener">code on GitHub</a>
