@@ -67,6 +67,49 @@ article was fine; the title was describing a narrower thing than the page delive
 
 ---
 
+## What a skill article may and may not give away
+
+**This governs every skill-related article.** Free-form and opinion pieces are a different
+genre and this section does not bind them.
+
+The skills may be productised later, the repos may go private, and a product layer may sit
+on top. An article that explains how a skill works is a build guide for whoever wants to
+clone it, and the reader gets nothing from it either.
+
+**Keep the problem precise. Keep the outcome precise. Drop the method.**
+
+| Write this | Not this |
+|---|---|
+| the problem, in enough detail that someone with it recognises themselves | the technique that solves it |
+| what the reader ends up holding | the steps that produce it |
+| what it refuses to do, and why that is a choice | the internal rules that enforce it |
+| that it handles a hard class of input | the enumerated list of what makes that input hard |
+
+Problem detail is not a giveaway. Anyone who has opened an Indian bank statement can see
+what is odd about it, and describing that accurately is what makes a reader think this
+person has actually done the work. Method detail is the asset.
+
+**Do not overcorrect into marketing.** Stripping specifics and leaving "handles all the
+edge cases" is vaguer, less convincing and less honest than what it replaced. The
+specificity moves from the solution to the problem and the outcome. It does not disappear.
+
+**JSON-LD `featureList` is where this leaks worst.** It is invisible to readers, so it
+delivers no value, and it tends to get written as an implementation checklist. Five pages
+carried 51 enumerated capability items before this was caught, including a full framework
+stack and a payments edge-case list. Keep it to about six lines about what the reader gets.
+
+Worked examples of the line, all from real edits:
+
+- *"a partial period read as a full year invents a decline that never happened"* keeps the
+  problem. Naming the field to check and the rule for detecting it would have been method.
+- *"three tied statements in the classification indian institutions actually read"* keeps
+  the outcome. The tie-check formulas and the line names were method, and were cut.
+- *"it treats city tiers as structurally different markets rather than a wealth ladder"*
+  keeps the insight. The rent deltas, attrition figures and retail-share numbers were the
+  research, and were cut.
+
+---
+
 ## The writing section is two families
 
 ```
