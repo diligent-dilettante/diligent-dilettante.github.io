@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collecting Payments in India: Integration Paths, Recurring Mandates and Settlement Reconciliation</title>
+  <meta name="description" content="How online payment collection works in India: payment links, hosted checkout, drop-in and server-to-server; the three recurring rails (UPI Autopay, e-NACH, card standing instructions) and the RBI rules that break subscriptions after launch; and why your provider settles net while your books need gross. Includes a free, open-source Claude skill. MIT licensed." />
+  <meta name="author" content="Sri Krishna Ravavarapu" />
+  <link rel="canonical" href="https://diligent-dilettante.github.io/india-payments.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)" />
+  <meta property="og:title" content="Collecting Payments in India, and the Rules That Break Subscriptions" />
+  <meta property="og:description" content="Integration paths, the three recurring rails, and why a subscription that worked fine starts failing after a price rise. Written by someone who works in payments, which is why it names no favourite." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://diligent-dilettante.github.io/india-payments.html" />
+  <meta property="og:site_name" content="Sri Krishna Ravavarapu" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Collecting Payments in India, and the Rules That Break Subscriptions" />
+  <meta name="twitter:description" content="Integration paths, the three recurring rails, and why a subscription that worked fine starts failing after a price rise." />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Collecting Payments in India, and the Rules That Break Subscriptions",
+    "description": "How online payment collection works in India: the difference between a gateway, an aggregator and an orchestrator; five integration paths ranked by effort; the three recurring rails and the RBI constraints that break subscriptions after launch; and settlement reconciliation against gross books.",
+    "author": {
+      "@type": "Person",
+      "name": "Sri Krishna Ravavarapu",
+      "url": "https://diligent-dilettante.github.io/",
+      "jobTitle": "Product Manager, Cross-Border Payments",
+      "worksFor": { "@type": "Organization", "name": "Razorpay" },
+      "alumniOf": ["Indian School of Business", "Indian Institute of Technology Madras"],
+      "sameAs": ["https://www.linkedin.com/in/sri-krishna-r/", "https://github.com/diligent-dilettante"]
+    },
+    "datePublished": "2026-08-16",
+    "dateModified": "2026-08-16",
+    "url": "https://diligent-dilettante.github.io/india-payments.html",
+    "mainEntityOfPage": "https://diligent-dilettante.github.io/india-payments.html",
+    "about": { "@type": "SoftwareApplication", "name": "India Payments" }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "India Payments",
+    "alternateName": "india-payments Claude skill",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any (runs inside Claude web, Claude Desktop, or Claude Code)",
+    "description": "A free, open-source Claude skill that helps merchants collect payments online in India. Covers one-time collection via payment links, hosted checkout, drop-in and server-to-server; recurring collection across UPI Autopay, e-NACH and card standing instructions; the RBI constraints including additional factor of authentication and pre-debit notification; settlement reconciliation, GST on gateway fees and TDS under section 194-O. It deliberately does not rank providers.",
+    "url": "https://github.com/diligent-dilettante/india-payments",
+    "codeRepository": "https://github.com/diligent-dilettante/india-payments",
+    "license": "https://opensource.org/licenses/MIT",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Sri Krishna Ravavarapu", "url": "https://diligent-dilettante.github.io/" },
+    "featureList": [
+      "Distinguishes payment gateway, payment aggregator and payment orchestrator",
+      "Ranks five one-time collection paths by integration effort",
+      "Explains when server-to-server puts a merchant in full PCI DSS scope",
+      "Covers UPI Autopay, e-NACH and card standing instructions as separate rails",
+      "Explains the per-transaction ceiling that breaks subscriptions after a price rise",
+      "Covers the pre-debit notification window and mandate revocation handling",
+      "Explains card tokenisation and the provider lock-in it creates",
+      "Three-way settlement reconciliation against orders, provider report and bank",
+      "GST on gateway fees, input credit, and TDS under section 194-O",
+      "Provider evaluation framework with no ranking or recommendation"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the difference between a payment gateway, a payment aggregator and a payment orchestrator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A payment gateway is the technology that moves a transaction to a bank or network. A payment aggregator onboards merchants under its own arrangement, collects customer money on their behalf and settles it to them; because it holds funds in transit this is a regulated activity in India requiring RBI authorisation and a designated settlement account. A payment orchestrator sits above several providers and routes between them without holding funds. Most of what is called a gateway in India is actually an aggregator."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which payment provider should I use in India?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "There is no single right answer, because pricing is negotiated and category acceptance decides more launches than the headline rate. Evaluate on effective rate per method at your volume, settlement cycle, whether a rolling reserve applies, whether your business category is accepted, which recurring rails are supported, the chargeback process and fee, out-of-hours support, and what happens to your card tokens if you leave. Confirm the provider appears on the RBI list of authorised payment aggregators before letting it hold your money."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do recurring payments fail after a price increase in India?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Indian recurring mandates carry a per-transaction ceiling. Below it, debits run unattended. Above it, the customer must authenticate that specific charge with an additional factor. A subscription that worked at a lower price starts failing once the price crosses the threshold, and it fails quietly. Confirm the current threshold before designing around it and make crossing it degrade gracefully."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the recurring payment options in India?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Three separate rails. UPI Autopay is registered with a UPI PIN in seconds and suits small-ticket consumer subscriptions. e-NACH debits a bank account, takes longer to register and suits larger tickets such as loans and SIPs. Card standing instructions operate under the RBI e-mandate framework. Each has different registration, limits and failure modes, and offering more than one improves conversion because registration abandonment differs between them."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need PCI DSS compliance to accept payments?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Only if you collect card details yourself. Hosted checkout and drop-in integrations send card data directly to the provider, keeping the merchant at the lightest compliance tier. Server-to-server integration places the merchant in full PCI DSS scope, requiring annual assessment, network segmentation, scanning and ongoing controls. That cost is why it is rarely worth it without high volume or a genuine multi-provider routing requirement."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is India Payments free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. It is MIT licensed and open source on GitHub at github.com/diligent-dilettante/india-payments, and needs nothing beyond existing access to Claude."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do payment settlements not match my revenue?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Providers settle net. The payout arrives after gateway fees, GST on those fees, refunds netted off and sometimes a rolling reserve, with chargebacks deducted from later payouts. Recording the settled amount as revenue understates turnover and forfeits input tax credit on the fee GST. Reconcile three ways each month, matching paid orders to the provider transaction report and then to bank credits, and recognise revenue on the transaction date rather than the settlement date."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (!t) { t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1b1b1d;
+      --muted: #5c5f66;
+      --accent: #0a5fa8;
+      --border: #e3e5e9;
+      --mark: rgba(10, 95, 168, 0.16);
+      --mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono', Consolas, monospace;
+      font-size: 18px;
+    }
+    [data-theme="dark"] {
+      --bg: #121316;
+      --text: #eceef1;
+      --muted: #9ba1aa;
+      --accent: #7cbcff;
+      --border: #282b31;
+      --mark: rgba(124, 188, 255, 0.24);
+    }
+    ::selection { background: var(--mark); }
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px;
+    }
+    .clock { color: var(--muted); font-variant-numeric: tabular-nums; }
+    .theme-switch {
+      display: inline-flex; align-items: center; gap: 2px;
+      border: 1px solid var(--border); border-radius: 999px; padding: 3px;
+    }
+    .tswitch {
+      cursor: pointer; background: none; border: none; padding: 0;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 999px;
+      color: var(--muted); opacity: 0.5;
+      transition: opacity 0.35s ease, background-color 0.35s ease, color 0.35s ease;
+    }
+    .tswitch svg { width: 19px; height: 19px; display: block; }
+    .tswitch[aria-pressed="true"] {
+      opacity: 1; color: var(--accent); background: var(--mark);
+    }
+    .tswitch[aria-pressed="true"] svg {
+      filter: drop-shadow(0 0 var(--glow-size, 5px) var(--glow, rgba(10, 95, 168, 0.55)));
+    }
+    .tswitch:hover { opacity: 0.85; }
+    .tswitch[aria-pressed="true"]:hover { opacity: 1; --glow-size: 9px; }
+    .moon-disc { opacity: 0.3; }
+    @media (prefers-reduced-motion: reduce) {
+      body { transition: none; }
+      .tswitch, .tswitch svg { transition: none; }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, Georgia, serif;
+      line-height: 1.75;
+      overflow-wrap: break-word;
+      transition: background-color 0.45s ease, color 0.45s ease;
+    }
+    nav {
+      display: flex; justify-content: flex-end; align-items: center; gap: 1.4rem;
+      padding: 0.85rem 2.5rem; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 9; background: var(--bg);
+    }
+    nav a { color: var(--accent); text-decoration: none; }
+    nav a:hover { text-decoration: underline; }
+    .page { max-width: 640px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+    h1 {
+      font-size: clamp(1.6rem, 6vw, 2rem);
+      font-weight: 400; letter-spacing: -0.4px; line-height: 1.2; margin-bottom: 0.75rem;
+    }
+    .byline { color: var(--muted); margin-bottom: 2.75rem; }
+    .byline a { color: var(--accent); text-decoration: none; }
+    p { margin-bottom: 1.15rem; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h2 {
+      font-weight: 400; margin: 3.25rem 0 1.4rem;
+      color: var(--muted); letter-spacing: 0.16em;
+    }
+    h3 { font-weight: 600; margin: 1.9rem 0 0.4rem; }
+    .tldr {
+      border-left: 2px solid var(--accent);
+      padding: 0.2rem 0 0.2rem 1.15rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+    code {
+      background: var(--border); padding: 0.1rem 0.4rem; border-radius: 3px;
+      font-family: var(--mono); font-size: 1em;
+    }
+    pre {
+      background: var(--border); border-radius: 4px; padding: 1rem 1.15rem;
+      overflow-x: auto; margin-bottom: 1.15rem;
+    }
+    pre code { background: none; padding: 0; line-height: 1.7; }
+    ul { margin: 0 0 1.15rem 1.2rem; }
+    li { margin-bottom: 0.4rem; }
+    .skills { width: 100%; border-collapse: collapse; margin-bottom: 1.2rem; }
+    .skills th, .skills td { text-align: left; vertical-align: top; padding: 0 1.5rem 1.25rem 0; }
+    .skills td:last-child { padding-right: 0; }
+    .skills th { font-weight: 600; white-space: nowrap; }
+    .table-wrap { overflow-x: auto; }
+    .faq h3 { margin-top: 1.9rem; }
+    .faq p { margin-bottom: 0.6rem; }
+    .back { margin-top: 4rem; }
+    @media (max-width: 700px) {
+      nav { padding: 0.7rem 1.2rem; }
+      .page { padding: 2rem 1.25rem 4rem; }
+    }
+
+    /* Typesetting. The browser ships most of this now; no library needed.
+       balance keeps headings off a one-word last line, pretty does the same
+       for paragraphs, and hanging punctuation pulls quotes into the margin. */
+    h1, h2, h3 { text-wrap: balance; }
+    p, li, .tldr, .sub { text-wrap: pretty; }
+    body { hanging-punctuation: first last; font-optical-sizing: auto; }
+
+    /* Anchored headings land below the fold edge, not flush against it. */
+    h2, h3, section[id] { scroll-margin-top: 5.5rem; }
+
+    /* Reading progress. One hairline, accent colour, no chrome around it. */
+    .progress {
+      position: fixed; top: 0; left: 0; height: 2px; width: 0;
+      background: var(--accent); z-index: 20;
+      transition: width 0.1s linear;
+    }
+    @media (prefers-reduced-motion: reduce) { .progress { transition: none; } }
+
+    /* Heading anchors. Invisible until you want them. */
+    .anchor {
+      float: left; margin-left: -1.1em; padding-right: 0.35em;
+      color: var(--muted); opacity: 0; text-decoration: none;
+      font-weight: 400; letter-spacing: 0;
+    }
+    h2:hover .anchor, h3:hover .anchor, .anchor:focus-visible { opacity: 0.55; }
+    .anchor:hover { opacity: 1; text-decoration: none; }
+    @media (max-width: 700px) { .anchor { display: none; } }
+
+    @media print {
+      nav, .theme-switch, .clock, .progress, .anchor, .back { display: none; }
+      body { background: #fff; color: #000; font-size: 11pt; line-height: 1.5; }
+      .page { max-width: none; padding: 0; }
+      a { color: #000; text-decoration: underline; }
+      /* Print the destination, since a printed link is otherwise useless. */
+      article a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; word-break: break-all; }
+      h2, h3 { break-after: avoid; }
+      pre, .tldr { break-inside: avoid; border: 1px solid #ccc; }
+    }
+
+    /* Real quotations only. A rule and a colour shift, no scale change, so
+       the two-size type decision holds. Not for repeating your own sentence
+       back at the reader; a short standalone paragraph already does that. */
+    blockquote {
+      margin: 1.9rem 0; padding-left: 1.15rem;
+      border-left: 2px solid var(--border);
+      color: var(--muted);
+    }
+    blockquote p:last-child { margin-bottom: 0; }
+    blockquote cite {
+      display: block; margin-top: 0.5rem; font-style: normal;
+      font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <nav>
+    <a href="index.html">home</a>
+    <a href="https://github.com/diligent-dilettante/life-planning" target="_blank" rel="noopener">source</a>
+    <time class="clock" id="clock" aria-label="Your local time"></time>
+
+    <span class="theme-switch" role="group" aria-label="Colour theme">
+      <button class="tswitch" id="setLight" data-set="light" aria-pressed="true" aria-label="Light theme">
+        <svg viewBox="-14 -14 28 28" aria-hidden="true" focusable="false">
+          <circle r="5.5" fill="currentColor"/>
+          <g stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <line x1="0" y1="-9" x2="0" y2="-12"/>
+            <line x1="0" y1="9" x2="0" y2="12"/>
+            <line x1="-9" y1="0" x2="-12" y2="0"/>
+            <line x1="9" y1="0" x2="12" y2="0"/>
+            <line x1="-6.4" y1="-6.4" x2="-8.5" y2="-8.5"/>
+            <line x1="6.4" y1="6.4" x2="8.5" y2="8.5"/>
+            <line x1="-6.4" y1="6.4" x2="-8.5" y2="8.5"/>
+            <line x1="6.4" y1="-6.4" x2="8.5" y2="-8.5"/>
+          </g>
+        </svg>
+      </button>
+      <button class="tswitch" id="setDark" data-set="dark" aria-pressed="false" aria-label="Dark theme">
+        <svg viewBox="-14 -14 28 28" aria-hidden="true" focusable="false">
+          <circle class="moon-disc" r="10" fill="none" stroke="currentColor" stroke-width="1"/>
+          <path id="moonLit" fill="currentColor"/>
+        </svg>
+      </button>
+    </span>
+  </nav>
+
+  <div class="page">
+
+    <article>
+
+    <h1>collecting payments in india, and the rules that break subscriptions</h1>
+    <p class="byline">
+      <time datetime="2026-08-16">16 August 2026</time> · 5 min read · <a href="index.html">Sri Krishna Ravavarapu</a> ·
+      <a href="https://github.com/diligent-dilettante/india-payments" target="_blank" rel="noopener">code on GitHub</a>
+    </p>
+
+    <div class="tldr">
+      <b>tl;dr:</b> india-payments is a free, open-source Claude skill for taking money
+      online in India. one-time and recurring, which integration path to pick, the RBI
+      constraints that break subscriptions after launch, and reconciling settlements
+      against your books. it does not tell you which provider to use, on purpose. MIT
+      licensed.
+      <a href="https://github.com/diligent-dilettante/india-payments" target="_blank" rel="noopener">get it here</a>.
+    </div>
+
+    <p>
+      most payment integrations work on the day they ship. the interesting failures come
+      later.
+    </p>
+
+    <h2>the disclosure first</h2>
+
+    <p>
+      i work in payments at Razorpay, which is one of the companies this covers. that is
+      exactly why neither the skill nor this piece recommends a provider. a guide written
+      by someone with a stake, that quietly steers, is worth less than no guide, and
+      readers spot it. so what follows is how the plumbing works and what to ask. the
+      choice stays yours.
+    </p>
+
+    <h2>the three things people call a gateway</h2>
+
+    <p>
+      a <b>payment gateway</b> is the technology that moves a transaction to a bank. a
+      <b>payment aggregator</b> onboards you, collects money on your behalf and settles it
+      to you. because it holds customer money in transit, that is a regulated activity: an
+      aggregator needs RBI authorisation and has to keep funds in a designated account
+      with defined settlement timelines. most of what people in India call a gateway is
+      actually an aggregator. a <b>payment orchestrator</b> sits above several providers
+      and routes between them, holding no funds, and is overkill until you have real
+      volume.
+    </p>
+
+    <p>
+      the RBI publishes the list of authorised aggregators. checking that whoever will
+      hold your money is on it takes two minutes and decides what happens to your
+      settlements if they fail. almost nobody does it.
+    </p>
+
+    <h2>how to actually take a payment</h2>
+
+    <p>
+      five paths, in order of effort. start at the top and only move down when something
+      genuinely rules the simpler one out.
+    </p>
+
+    <p>
+      a <b>payment link</b> is a URL you send. no site, no code, minutes. for a freelancer
+      invoicing five clients a month or anyone selling over Instagram this is the right
+      answer, and it gets dismissed because it feels unserious. a <b>payment page</b> is a
+      hosted storefront, still no code. <b>hosted checkout</b> is the default for anyone
+      with a site: their checkout opens over your page, you never touch card data, your
+      PCI scope stays minimal, and you inherit new payment methods without shipping
+      anything. <b>drop-in</b> renders inside your page for more control and more work.
+    </p>
+
+    <p>
+      <b>server-to-server</b> means you collect the card details yourself. that puts you
+      in full PCI DSS scope: annual assessment, segmentation, scanning, ongoing cost in
+      money and attention. most people asking for it are chasing a design detail that
+      drop-in already gives them.
+    </p>
+
+    <p>
+      whichever path, four things decide whether it survives production. create the order
+      server-side, because anything trusting a client-supplied amount is a way to buy
+      things for one rupee. verify the webhook signature, which a surprising number of
+      live integrations skip, meaning anyone who finds the endpoint can mark orders paid.
+      treat the webhook as the source of truth rather than the browser redirect, because
+      the customer closes the tab and the money still moved. and make the handler
+      idempotent, because webhooks retry and a non-idempotent handler ships the order
+      twice.
+    </p>
+
+    <h2>recurring, where it gets hard</h2>
+
+    <p>
+      india has three separate recurring rails, not one. <b>UPI Autopay</b> for consumer
+      subscriptions, registered with a UPI PIN in seconds. <b>e-NACH</b> for bank-account
+      debit, slower to register and suited to larger tickets. <b>card standing
+      instructions</b> under the RBI e-mandate framework. different registration,
+      different limits, different failure modes. offering more than one lifts conversion,
+      because abandonment during registration differs sharply between them.
+    </p>
+
+    <p>
+      three rules break integrations, and all three bite after launch rather than during
+      it.
+    </p>
+
+    <p>
+      <b>authentication at registration.</b> there is no silent enrolment. any flow
+      assuming a mandate can be created from details you already hold does not work.
+    </p>
+
+    <p>
+      <b>a per-transaction ceiling above which authentication is required again.</b> below
+      it, debits run unattended. above it, the customer has to authenticate that specific
+      charge. this is the one that catches people: a subscription working fine at a low
+      price starts failing when you raise the price past the ceiling, and it fails
+      quietly.
+    </p>
+
+    <p>
+      <b>a mandatory pre-debit notification</b> a fixed period before each debit. the
+      provider usually sends it, but you have to trigger it with enough lead time. charge
+      the moment a cycle ends and the debit will not present.
+    </p>
+
+    <p>
+      then there is tokenisation. you may not store card numbers, so cards on file are
+      network-issued tokens tied to one merchant and one provider. they do not port.
+      switching providers means migrating tokens or asking customers to re-enter cards,
+      and card reissues break tokens on their own, producing a background failure rate
+      that has nothing to do with anyone's balance. ask about exit before you integrate.
+    </p>
+
+    <p>
+      design for failure, because failure is routine. retry on a schedule rather than
+      immediately, since a balance problem resolves on salary day. cap the retries. tell
+      the customer what happened with a one-tap fix. and separate involuntary churn from
+      real churn in your metrics, or you will read a plumbing problem as a product problem
+      and go and change the product.
+    </p>
+
+    <h2>your provider settles net, your books need gross</h2>
+
+    <p>
+      this is the part nobody plans for. money does not arrive as the customer paid it. it
+      arrives after fees, after GST on those fees, after refunds are netted off, sometimes
+      after a rolling reserve is withheld. chargebacks turn up later and come out of a
+      future payout.
+    </p>
+
+    <p>
+      record the settled amount as revenue and you understate turnover, lose the input
+      credit on the fee GST, and end up with books that disagree with your provider's own
+      report in a way that is miserable to unpick a year later. the bank statement shows
+      only the last line, which is why reconciliation cannot be done from the bank alone.
+    </p>
+
+    <p>
+      reconcile three ways, monthly: your paid orders, the provider's transaction report,
+      the bank credits. two mismatches matter. an order marked paid with no provider
+      transaction is usually an unverified webhook. a provider transaction with no order
+      means someone paid and never got what they bought, which costs you a customer
+      silently.
+    </p>
+
+    <h2>how to install india payments</h2>
+
+    <p>copy the skill folder in:</p>
+
+<pre><code>cp -r india-payments ~/.claude/skills/</code></pre>
+
+    <p>
+      on Claude web, upload it as a skill or drop it into a project. then describe the
+      situation: <i>"i sell a course, how do i take payments"</i>, <i>"my subscription
+      debits started failing after we raised the price"</i>, or <i>"do i need PCI
+      compliance"</i>.
+    </p>
+
+    <h2>questions</h2>
+
+    <div class="faq">
+
+      <h3>which payment provider should i use?</h3>
+      <p>
+        the skill will not tell you, and neither will i. pricing is negotiated, settlement
+        cycles differ, and category acceptance decides more launches than the headline
+        rate does. what it gives you is the questions to ask and what actually varies:
+        effective rate per method at your volume, settlement cycle, rolling reserve,
+        category acceptance, recurring rails, chargeback process, out-of-hours support,
+        and what happens to your card tokens if you leave.
+      </p>
+
+      <h3>why do subscriptions fail after a price rise?</h3>
+      <p>
+        there is a per-transaction ceiling above which the customer must authenticate each
+        charge. below it, debits run unattended. cross it and every debit needs an action
+        the customer does not know to take. confirm the current threshold before designing
+        around it, and degrade gracefully rather than failing silently.
+      </p>
+
+      <h3>do i need PCI DSS compliance?</h3>
+      <p>
+        only if you collect card details yourself. hosted checkout and drop-in send card
+        data straight to the provider, keeping your scope at the lightest tier.
+        server-to-server puts you in full scope with an annual assessment and ongoing
+        controls. that cost is the reason to avoid it unless you have volume or a genuine
+        multi-provider routing need.
+      </p>
+
+      <h3>what's the difference between a gateway, an aggregator and an orchestrator?</h3>
+      <p>
+        a gateway is the technology moving a transaction to a bank. an aggregator onboards
+        you, collects money on your behalf and settles it to you, which is regulated
+        because it holds funds in transit and needs RBI authorisation. an orchestrator
+        routes across several providers and holds nothing. most Indian "gateways" are
+        aggregators.
+      </p>
+
+      <h3>what are the recurring options in india?</h3>
+      <p>
+        three separate rails. UPI Autopay, registered with a UPI PIN in seconds, for
+        small-ticket consumer subscriptions. e-NACH for bank-account debit, slower to
+        register, suited to larger tickets. card standing instructions under the RBI
+        e-mandate framework. offering more than one lifts conversion, because registration
+        abandonment differs sharply between them.
+      </p>
+
+      <h3>why don't my settlements match my revenue?</h3>
+      <p>
+        providers settle net. the payout arrives after fees, GST on those fees, refunds
+        netted off and sometimes a rolling reserve, with chargebacks coming out of later
+        payouts. recognise revenue on the transaction date, not the settlement date, and
+        book the fee and its GST separately or you forfeit the input credit.
+      </p>
+
+      <h3>is it free?</h3>
+      <p>
+        yes. MIT licensed, open source, nothing needed beyond existing Claude access.
+      </p>
+
+    </div>
+
+    <h2>try it</h2>
+
+    <p>
+      <a href="https://github.com/diligent-dilettante/india-payments" target="_blank" rel="noopener">GitHub.com/diligent-dilettante/india-payments</a>.
+      if it saves you a launch,
+      <a href="mailto:krishna.ravavarapu@gmail.com">write to me</a>.
+    </p>
+
+    </article>
+
+
+    <div class="back">
+      <a href="index.html">← back home</a>
+    </div>
+
+  </div>
+
+  <script src="theme.js?v=3" defer></script>
+
+</body>
+</html>
