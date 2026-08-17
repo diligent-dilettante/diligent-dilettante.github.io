@@ -43,9 +43,10 @@
 
     /* Reading progress. One hairline, accent colour, no chrome around it. */
     .progress {
-      position: fixed; top: 0; left: 0; height: 2px; width: 0;
+      position: fixed; top: 0; left: 0; height: 2px; width: 100%;
       background: var(--accent); z-index: 20;
-      transition: width 0.1s linear;
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.1s linear;
     }
     @media (prefers-reduced-motion: reduce) { .progress { transition: none; } }
 

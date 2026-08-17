@@ -115,8 +115,8 @@
   function update() {
     var top = art.offsetTop;
     var span = art.offsetHeight - window.innerHeight;
-    var pct = span <= 0 ? 100 : ((window.scrollY - top) / span) * 100;
-    bar.style.width = Math.max(0, Math.min(100, pct)) + '%';
+    var pct = span <= 0 ? 1 : (window.scrollY - top) / span;
+    bar.style.transform = 'scaleX(' + Math.max(0, Math.min(1, pct)) + ')';
     ticking = false;
   }
   function onScroll() {
