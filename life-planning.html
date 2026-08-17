@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Life Planning: A Free Open-Source Claude Skill for Values, Goals and Weekly Check-Ins</title>
-  <meta name="description" content="Life Planning is a free, open-source Claude skill that coaches one person through values, direction, goals, a ten-minute weekly check-in and quarterly reviews. It asks questions instead of handing out templates, keeps one markdown file, and does the tracking for you. MIT licensed, runs on Claude web, desktop and Claude Code." />
+  <meta name="description" content="Life Planning is a free, open-source Claude skill that coaches one person through values, direction, goals, a ten-minute weekly check-in and quarterly reviews. It works out when you actually get a clear block of time, sizes the goal to that, and counts in your cycle rather than a week you do not have. One markdown file, MIT licensed, runs on Claude web, desktop and Claude Code." />
   <meta name="author" content="Sri Krishna Ravavarapu" />
   <link rel="canonical" href="https://diligent-dilettante.github.io/life-planning.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)" />
   <meta property="og:title" content="Life Planning: A Claude Skill Built for Week Three" />
-  <meta property="og:description" content="A free, open-source Claude skill for values, goals and a ten-minute weekly check-in. Most planning tools help you write the plan. This one is built for the week the plan usually dies." />
+  <meta property="og:description" content="A free, open-source Claude skill for values, goals and a ten-minute weekly check-in. It works out the shape of your week before it sets you a goal, and is built for the week the plan usually dies." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://diligent-dilettante.github.io/life-planning.html" />
   <meta property="og:site_name" content="Sri Krishna Ravavarapu" />
@@ -24,7 +24,7 @@
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "headline": "A Life Planning Skill Built for Week Three",
-    "description": "Life Planning is a free, open-source Claude skill that runs values, direction, goals and a weekly check-in as a conversation rather than a template. Most of its length sits on keeping a plan alive after the planning session.",
+    "description": "Life Planning is a free, open-source Claude skill that runs values, direction, goals and a weekly check-in as a conversation rather than a template. It establishes when you actually get a clear block of time before it sets a goal, sizes the goal to that, and counts in your cycle when the week is not your unit. Most of its length sits on keeping a plan alive after the planning session.",
     "author": {
       "@type": "Person",
       "name": "Sri Krishna Ravavarapu",
@@ -35,7 +35,7 @@
       "sameAs": ["https://www.linkedin.com/in/sri-krishna-r/", "https://github.com/diligent-dilettante"]
     },
     "datePublished": "2026-08-15",
-    "dateModified": "2026-08-15",
+    "dateModified": "2026-08-18",
     "url": "https://diligent-dilettante.github.io/life-planning.html",
     "mainEntityOfPage": "https://diligent-dilettante.github.io/life-planning.html",
     "about": { "@type": "SoftwareApplication", "name": "Life Planning" }
@@ -50,7 +50,7 @@
     "alternateName": "life-planning Claude skill",
     "applicationCategory": "LifestyleApplication",
     "operatingSystem": "Any (runs inside Claude web, Claude Desktop, or Claude Code)",
-    "description": "A free, open-source Claude skill that coaches one person through values, direction, goals, the commitments a goal has to sit on, a ten-minute weekly check-in, quarterly and annual reviews, money, household load, and getting unstuck. It asks questions instead of handing out templates, keeps everything in one markdown file called life-plan.md, and does the tracking so the user never maintains a system.",
+    "description": "A free, open-source Claude skill that coaches one person through values, direction, goals, the commitments a goal has to sit on, a ten-minute weekly check-in, quarterly and annual reviews, money, household load, and getting unstuck. It asks when the user actually gets a clear block of time and sizes the goal to that answer, counts in their cycle when the week is not the right unit, keeps everything in one markdown file called life-plan.md, and does the tracking so the user never maintains a system.",
     "url": "https://github.com/diligent-dilettante/life-planning",
     "codeRepository": "https://github.com/diligent-dilettante/life-planning",
     "downloadUrl": "https://github.com/diligent-dilettante/life-planning",
@@ -67,7 +67,11 @@
       "url": "https://diligent-dilettante.github.io/"
     },
     "featureList": [
-      "Gets you a usable plan out of one short conversation",
+      "Gets you a usable plan out of one short conversation, in about twenty minutes",
+      "Sizes the goal to the week you actually have, from one question",
+      "Counts in your cycle when the week is not your unit, such as a rotating roster, term time or a season",
+      "Hangs the commitment off something that already happens when other people decide your day",
+      "Measures a handoff rather than desk hours when your work happens through other people",
       "Keeps it alive with a weekly check-in that takes ten minutes",
       "Everything lives in one file you can read in five minutes",
       "Built for one person; a partner is optional and never a dependency",
@@ -120,15 +124,7 @@
         "name": "who is it for?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "One person, in their own conversation, over months. That is the design centre rather than a fallback, and everything works if they are the only person who ever uses it. Someone with a partner gets an optional layer: one question per session worth asking them, and a record of what the partner has and has not seen. The skill assumes the partner never takes part."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "how long is a session?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Twenty minutes for the first conversation. Ten minutes a week for the check-in after that. Thirty minutes once a quarter for a review. Longer versions exist, at forty-five to ninety minutes, and are usually the wrong choice."
+          "text": "One person, in their own conversation, over months. Everything works if they are the only person who ever uses it. Someone with a partner gets an optional layer: one question per session worth asking them, and a record of what the partner has and has not seen. The skill assumes that question never comes back answered."
         }
       },
       {
@@ -378,14 +374,15 @@
 
     <h1>a life planning skill built for week three</h1>
     <p class="byline">
-      <time datetime="2026-08-15">15 August 2026</time> · 4 min read · <a href="index.html">Sri Krishna Ravavarapu</a> ·
+      <time datetime="2026-08-15">15 August 2026</time> · 5 min read · <a href="index.html">Sri Krishna Ravavarapu</a> ·
       <a href="https://github.com/diligent-dilettante/life-planning" target="_blank" rel="noopener">code on GitHub</a>
     </p>
 
     <div class="tldr">
       <b>tl;dr:</b> life-planning is a free, open-source Claude skill that runs values, direction,
-      goals and a ten-minute weekly check-in as a conversation. it keeps one markdown file and
-      does the tracking, so nothing has to be maintained. MIT licensed.
+      goals and a ten-minute weekly check-in as a conversation. it works out when you actually
+      get a clear block of time before it sets you anything, keeps one markdown file, and does
+      the tracking. MIT licensed.
       <a href="https://github.com/diligent-dilettante/life-planning" target="_blank" rel="noopener">get it here</a>.
     </div>
 
@@ -410,26 +407,61 @@
     </p>
 
     <p>
-      it covers values, direction, twelve-week goals, the commitments a goal has to sit on,
-      money, who carries what at home, and getting unstuck. one person is the design centre.
-      a partner is an optional layer that adds a question worth taking home, and the skill
-      assumes that question never comes back answered.
+      one person is the design centre, not the reduced version. the couples material sits
+      alongside it, gets used if you want it, and is never assumed.
     </p>
 
     <div class="table-wrap">
       <table class="skills">
-        <tr><th>values</th><td>peak moments, disproportionate irritation, and what each value costs. 20 minutes, or 90.</td></tr>
-        <tr><th>vision</th><td>workview and lifeview, odyssey plans, an ordinary Tuesday three years out. 30 minutes, or 90.</td></tr>
-        <tr><th>goals</th><td>twelve-week goals, WOOP, if-then plans, lead measures. 25 minutes, or 60.</td></tr>
+        <tr><th>values</th><td>peak moments, disproportionate irritation, what each one costs. 20 minutes, or 90.</td></tr>
+        <tr><th>vision</th><td>odyssey plans, an ordinary Tuesday three years out. 30 minutes, or 90.</td></tr>
+        <tr><th>goals</th><td>one twelve-week goal, sized to the week you actually have. 25 minutes, or 60.</td></tr>
         <tr><th>foundations</th><td>what a goal is standing on. runway, commitments, the rung that is missing. 20 minutes.</td></tr>
-        <tr><th>check-in</th><td>the weekly one. your numbers read back, one number in, anything in the way. 10 minutes.</td></tr>
+        <tr><th>check-in</th><td>your numbers read back, one number in, anything in the way. 10 minutes.</td></tr>
         <tr><th>review</th><td>quarterly scoring and the annual past-year review. 30 minutes.</td></tr>
-        <tr><th>stuck</th><td>immunity to change, a jammed decision, the argument that keeps recurring. 45 minutes.</td></tr>
-        <tr><th>money and load</th><td>money scripts and household load. 45 minutes.</td></tr>
+        <tr><th>stuck</th><td>a jammed decision, or the argument that keeps recurring. 45 minutes.</td></tr>
+        <tr><th>money and load</th><td>money scripts, and who carries what at home. 45 minutes.</td></tr>
       </table>
     </div>
 
-    <h2>how it works</h2>
+    <h2>what if you don't have a normal week</h2>
+
+    <p>
+      before it sets you a goal it asks one thing. in a normal week, if there is such a thing
+      for you, when do you actually get a clear block of time. that answer sizes everything
+      after it. four sessions a week set for someone with two evenings reads as ambition in the
+      room and as failure by week three.
+    </p>
+
+    <p>
+      then it counts in the unit you live in. a rotating roster, term time, a season, a travel
+      cycle. scoring a six-week person weekly is wrong every week and right on average, so the
+      number goes per cycle instead. seven of eight is a good quarter.
+    </p>
+
+    <p>
+      when other people decide your day, a fixed slot is a fiction, and missing it twelve times
+      is not a discipline finding. the commitment hangs off something that already happens
+      instead. after the last call, before the laptop opens.
+    </p>
+
+    <p>
+      where the work happens through other people, the measure becomes a named handoff and what
+      came back from it rather than hours at a desk.
+    </p>
+
+    <p>
+      and if there is no reliable block anywhere, it stops asking rather than inventorying what
+      you have not got. you still leave with one goal, sized to what exists. ten minutes with
+      the book, or the guitar out of its case.
+    </p>
+
+    <p>
+      one question, then it moves on. the rest only opens if your answer opens it, and you
+      still end up with one concrete thing in about twenty minutes.
+    </p>
+
+    <h2>how does it keep a plan alive</h2>
 
     <p>
       every session after the first opens with Claude reading the file and saying where things
@@ -439,15 +471,9 @@
     </p>
 
     <p>
-      the weekly measure is whatever the person said in answer to one question: what is the
-      thing you fully control that you could do this week. a number invented for someone is one
-      they fail against without having agreed to it.
-    </p>
-
-    <p>
-      three quarters in, the file knows things its owner does not. which goals get finished and
-      which get carried. that both stalls landed in the fortnight after a work trip. that a goal
-      with a weekly number attached gets done and one without does not.
+      the measure is whatever the person said in answer to one question: what is the thing you
+      fully control that you could do in one of your blocks. a number invented for someone is
+      one they fail against without having agreed to it.
     </p>
 
     <p>
@@ -458,39 +484,32 @@
     <h2>how is it different from other planning skills</h2>
 
     <p>
-      the published alternatives are template systems. they hand over the frameworks and the
-      documents, and assume the hard part is knowing what to write down.
+      the published alternatives are template systems. they hand over the frameworks and assume
+      the hard part is knowing what to write down.
     </p>
 
     <p>
       the hard part is week three. most of this skill's length sits there and on how the
-      conversation is run. the file on conversational stance is the largest in the repo and
-      contains no frameworks at all. it is mostly about staying quiet, following the flinch
-      rather than the content, and resisting the urge to fix.
+      conversation is run, which is mostly staying quiet and following the flinch rather than
+      the content. so when the log shows a goal stalled right after a work trip, it asks why
+      before it says so. offer someone a ready-made external cause and they will take it,
+      sincerely, and the conversation ends there.
     </p>
 
     <p>
-      one consequence: when the log shows a goal stalled right after a work trip, the skill
-      does not say so before asking why. offer someone a ready-made external cause and they
-      will take it, sincerely, and the conversation ends there. the open question comes first
-      and the pattern comes later, if it still matters.
+      the same instinct governs dropping. most people cannot drop a goal, because dropping feels
+      like failing, so they carry it dead for another quarter and it discredits everything next
+      to it. it asks directly whether the goal is still wanted, or whether what is wanted is not
+      to be the person who dropped it.
     </p>
 
-    <p>
-      the same instinct governs dropping. most people cannot drop a goal, because dropping feels like
-      failing, so they carry it dead for another quarter and it discredits everything next to
-      it. the skill asks directly whether the goal is still wanted, or whether what is wanted
-      is not to be the person who dropped it.
-    </p>
-
-    <h2>what happens after a lapse</h2>
+    <h2>what happens if you stop for a month</h2>
 
     <p>
-      a month of silence is the normal case. going back does not require tidying up first.
-      the skill reads back where things were, asks whether it was a bad month or whether the
-      goal was never the one, halves whatever was being attempted, and starts again in about
-      twenty minutes. there is no autopsy. a miss is data, and the skill says so out loud
-      before the first one happens.
+      a month of silence is the normal case, and going back does not require tidying up first.
+      it reads where things were, asks whether it was a bad month or whether the goal was never
+      the one, halves what was being attempted, and starts again in twenty minutes. no autopsy.
+      a miss is data, and it says so out loud before the first one happens.
     </p>
 
     <h2>how to install life planning</h2>
@@ -505,11 +524,9 @@ Customize → Skills → + → Create skill → upload life-planning.zip</code><
 <pre><code>cp -r life-planning ~/.claude/skills/</code></pre>
 
     <p>
-      then describe what is going on, in ordinary words:
-      <i>"help me work out what actually matters to me"</i>,
-      <i>"i made a plan in january and nothing happened"</i>, or
-      <i>"let's do my check-in"</i>. the skill picks the smallest session that fits and
-      starts there. it does not open with a menu.
+      then describe what is going on, in ordinary words.
+      <i>"i made a plan in january and nothing happened"</i> is enough. it picks the smallest
+      session that fits and starts there, without opening with a menu.
     </p>
 
     <h2>questions</h2>
@@ -518,16 +535,10 @@ Customize → Skills → + → Create skill → upload life-planning.zip</code><
 
       <h3>who is it for?</h3>
       <p>
-        one person, in their own conversation, over months. that is the design centre rather
-        than a fallback, and everything works if they are the only one who ever uses it.
-        someone with a partner gets an optional layer: one question per session worth asking
-        them, and a note of what the partner has and has not seen.
-      </p>
-
-      <h3>how long is a session?</h3>
-      <p>
-        twenty minutes for the first. ten minutes a week after that. thirty minutes once a
-        quarter. the long versions exist and are usually the wrong choice.
+        one person, in their own conversation, over months. everything works if they are the
+        only one who ever uses it. someone with a partner gets an optional layer: one question
+        per session worth asking them, and a note of what the partner has and has not seen.
+        the skill assumes that question never comes back answered.
       </p>
 
       <h3>where does the data live?</h3>
@@ -539,9 +550,9 @@ Customize → Skills → + → Create skill → upload life-planning.zip</code><
       <h3>is it therapy?</h3>
       <p>
         no, and it says so itself. if what surfaces is bigger than a planning conversation, it
-        names that once, plainly, and then goes back to the planning work rather than
-        continuing to excavate. it is a coaching tool for goals and direction, not a substitute
-        for professional care.
+        names that once, plainly, then goes back to the planning work rather than excavating
+        further. it is a coaching tool for goals and direction, not a substitute for
+        professional care.
       </p>
 
       <h3>is it free?</h3>
@@ -561,9 +572,7 @@ Customize → Skills → + → Create skill → upload life-planning.zip</code><
     <h2>try it</h2>
 
     <p>
-      the exercises are established work, assembled and adapted. GROW, the ACT bull's eye,
-      designing your life, WOOP, the twelve week year, immunity to change, fair play, the past
-      year review. full attributions are in the repo.
+      the exercises are established work, assembled and adapted. attributions are in the repo.
     </p>
 
     <p>
